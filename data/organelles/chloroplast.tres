@@ -15,4 +15,4 @@ waste_production = 1.0
 food_output_plant = 20.0
 allowed_cell_types = PackedInt32Array(1)
 repair_energy_cost = 5.0
-atlas_tile = Vector2i(0, 5)
+atlas_tile = Vector2i(0, 4)

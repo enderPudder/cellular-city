@@ -51,7 +51,7 @@ func _rows() -> Array[Dictionary]:
 			"city_text": "Power plants take in resources that burn hot to turn turbines and create energy. Mitochondria take in food to make the cell's chemical energy.",
 			"energy_use": 20.0, "water_use": 15.0, "food_use": 20.0, "waste_production": 2.0,
 			"energy_output": 150.0, "max_load": 150.0, "needs_energy_link": false,
-			"repair_energy_cost": 5.0, "atlas_tile": Vector2i(0, 3),
+			"repair_energy_cost": 5.0, "atlas_tile": Vector2i(0, 6),
 		},
 		{
 			"id": "vacuole", "display_name": "Vacuole", "city_name": "Water tower",
@@ -76,7 +76,7 @@ func _rows() -> Array[Dictionary]:
 			"city_text": "A library holds information on how to do things, make things and where places are. Chromosomes store information on what the cell should do and look like.",
 			"water_use": 3.0, "waste_production": 0.3, "needs_energy_link": false,
 			"decay_per_second": 0.1, "repair_energy_cost": 3.0,
-			"unlock_thresholds": {"water": 50.0}, "atlas_tile": Vector2i(0, 4),
+			"unlock_thresholds": {"water": 50.0}, "atlas_tile": Vector2i(0, 3),
 		},
 		{
 			"id": "chloroplast", "display_name": "Chloroplast", "city_name": "Solar panels",
@@ -84,7 +84,7 @@ func _rows() -> Array[Dictionary]:
 			"city_text": "Solar panels are chloroplasts of a city: they take sunlight and make it into usable energy.",
 			"energy_use": 20.0, "water_use": 10.0, "waste_production": 1.0, "food_output_plant": 20.0,
 			"allowed_cell_types": PackedInt32Array([PLANT]), "repair_energy_cost": 5.0,
-			"atlas_tile": Vector2i(0, 5),
+			"atlas_tile": Vector2i(0, 4),
 		},
 		{
 			"id": "endoplasmic_reticulum", "display_name": "Endoplasmic reticulum", "city_name": "Factory",
@@ -92,7 +92,7 @@ func _rows() -> Array[Dictionary]:
 			"city_text": "A factory quickly creates goods and sends them on their way. The ER makes proteins and lipids and holds the reserves that keep production going.",
 			"energy_use": 10.0, "water_use": 10.0, "waste_production": 0.5,
 			"fat_access": true, "max_paired_mitochondria": 1, "repair_energy_cost": 3.0,
-			"unlock_thresholds": {"food": 80.0}, "atlas_tile": Vector2i(0, 6),
+			"unlock_thresholds": {"food": 80.0}, "atlas_tile": Vector2i(0, 5),
 		},
 		{
 			"id": "lysosome", "display_name": "Lysosome", "city_name": "Waste processing facility",
