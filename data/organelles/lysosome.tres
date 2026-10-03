@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="OrganelleDef" format=3]
+
+[ext_resource type="Script" path="res://scripts/sim/organelle_def.gd" id="1_0s0nw"]
+
+[resource]
+script = ExtResource("1_0s0nw")
+id = "lysosome"
+display_name = "Lysosome"
+city_name = "Waste processing facility"
+function_text = "Takes in waste and turns it into usable nutrients or harmless particles. Its nutrients go back to the cell as food."
+city_text = "Waste processing facilities take in garbage and grind it up or burn it for energy. Lysosomes turn waste into usable nutrients."
+energy_use = 15.0
+water_use = 5.0
+waste_removal_animal = 3.0
+waste_removal_plant = 3.0
+waste_to_food = 0.5
+unlock_thresholds = {
+"waste": 25.0
+}
+allowed_cell_types = PackedInt32Array(0, 1)
+repair_energy_cost = 5.0
+atlas_tile = Vector2i(0, 7)

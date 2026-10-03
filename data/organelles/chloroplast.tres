@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="OrganelleDef" format=3]
+
+[ext_resource type="Script" path="res://scripts/sim/organelle_def.gd" id="1_y0ewn"]
+
+[resource]
+script = ExtResource("1_y0ewn")
+id = "chloroplast"
+display_name = "Chloroplast"
+city_name = "Solar panels"
+function_text = "Where photosynthesis happens. In plant cells this is where food comes from for the mitochondria to turn into energy."
+city_text = "Solar panels are chloroplasts of a city: they take sunlight and make it into usable energy."
+energy_use = 20.0
+water_use = 10.0
+waste_production = 1.0
+food_output_plant = 20.0
+allowed_cell_types = PackedInt32Array(1)
+repair_energy_cost = 5.0
+atlas_tile = Vector2i(0, 5)

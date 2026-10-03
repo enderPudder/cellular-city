@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="OrganelleDef" format=3]
+
+[ext_resource type="Script" path="res://scripts/sim/organelle_def.gd" id="1_2kryy"]
+
+[resource]
+script = ExtResource("1_2kryy")
+id = "membrane"
+display_name = "Membrane"
+city_name = "City limits"
+function_text = "A semi-permeable layer that controls what enters and exits the cell. It collects water, and in animal cells it absorbs food."
+city_text = "City limits control what enters and exits a city, just like a membrane controls what enters and exits a cell."
+energy_use = 0.2
+water_output = 0.6
+food_output_animal = 0.25
+needs_energy_link = false
+needs_water_link = false
+allowed_cell_types = PackedInt32Array(0, 1)
+repair_energy_cost = 0.5
+decay_per_second = 0.1
+atlas_tile = Vector2i(2, 0)

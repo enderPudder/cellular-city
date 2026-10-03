@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="OrganelleDef" format=3]
+
+[ext_resource type="Script" path="res://scripts/sim/organelle_def.gd" id="1_6oqtq"]
+
+[resource]
+script = ExtResource("1_6oqtq")
+id = "nucleus"
+display_name = "Nucleus"
+city_name = "Municipal government"
+function_text = "Controls the cell's actions and holds the chromosomes. Every cell needs one, and it only works beside its chromosomes."
+city_text = "The government creates laws and makes sure everything is in order, just like a nucleus. The DNA inside holds the instructions that tell the cell what to do."
+energy_use = 5.0
+water_use = 10.0
+waste_production = 0.5
+requires_adjacent = "chromosomes"
+allowed_cell_types = PackedInt32Array(0, 1)
+repair_energy_cost = 3.0

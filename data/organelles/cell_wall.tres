@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="OrganelleDef" format=3]
+
+[ext_resource type="Script" path="res://scripts/sim/organelle_def.gd" id="1_f5h6a"]
+
+[resource]
+script = ExtResource("1_f5h6a")
+id = "cell_wall"
+display_name = "Cell wall"
+city_name = "Flood gates"
+function_text = "A thick, sturdy outer layer of plant cells that gives support and keeps the inside separate from the outside. It slowly wears down and must be replaced."
+city_text = "Flood gates protect a city from storms and tsunamis. A cell wall is sturdy and keeps the inside of the cell separated from the outside."
+energy_use = 0.1
+water_output = 0.4
+needs_energy_link = false
+needs_water_link = false
+allowed_cell_types = PackedInt32Array(1)
+placement_energy_cost = 0.5
+repair_energy_cost = 0.5
+decay_per_second = 0.05
+atlas_tile = Vector2i(2, 3)

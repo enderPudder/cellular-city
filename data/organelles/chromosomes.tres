@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="OrganelleDef" format=3]
+
+[ext_resource type="Script" path="res://scripts/sim/organelle_def.gd" id="1_vmndx"]
+
+[resource]
+script = ExtResource("1_vmndx")
+id = "chromosomes"
+display_name = "Chromosomes"
+city_name = "Library"
+function_text = "Store, protect and spread your DNA around the cell. They wear down and need energy to repair, and must sit beside the nucleus."
+city_text = "A library holds information on how to do things, make things and where places are. Chromosomes store information on what the cell should do and look like."
+water_use = 3.0
+waste_production = 0.3
+needs_energy_link = false
+unlock_thresholds = {
+"water": 50.0
+}
+allowed_cell_types = PackedInt32Array(0, 1)
+repair_energy_cost = 3.0
+decay_per_second = 0.1
+atlas_tile = Vector2i(0, 4)

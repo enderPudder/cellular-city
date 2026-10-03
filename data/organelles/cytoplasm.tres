@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="OrganelleDef" format=3]
+
+[ext_resource type="Script" path="res://scripts/sim/organelle_def.gd" id="1_illx4"]
+
+[resource]
+script = ExtResource("1_illx4")
+id = "cytoplasm"
+display_name = "Cytoplasm"
+city_name = "Delivery systems"
+function_text = "A jelly-like substance that constantly moves around the cell, carrying food and oxygen to organelles. In plant cells its movement also carries waste away."
+city_text = "People who deliver food to people are like cytoplasm, except they aren't jelly."
+energy_use = 1.0
+water_use = 2.0
+waste_production = 0.1
+waste_removal_plant = 0.5
+needs_energy_link = false
+needs_water_link = false
+allowed_cell_types = PackedInt32Array(0, 1)
+atlas_tile = Vector2i(0, 2)

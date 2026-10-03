@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="OrganelleDef" format=3]
+
+[ext_resource type="Script" path="res://scripts/sim/organelle_def.gd" id="1_bh1h0"]
+
+[resource]
+script = ExtResource("1_bh1h0")
+id = "vacuole"
+display_name = "Vacuole"
+city_name = "Water tower"
+function_text = "Stores water and liquid waste so the cell can use or expel it later. Animal vacuoles stay small, plant vacuoles can grow large."
+city_text = "Water towers store water or liquids for later use. A vacuole does the same, and can also expel waste water."
+energy_use = 5.0
+water_use = 15.0
+waste_removal_animal = 3.33
+waste_removal_plant = 3.33
+water_capacity_bonus = 40.0
+unlock_thresholds = {
+"water": 80.0
+}
+allowed_cell_types = PackedInt32Array(0, 1)
+max_group_size_animal = 4
+max_group_size_plant = 25
+atlas_tile = Vector2i(0, 1)

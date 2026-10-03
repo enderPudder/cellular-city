@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="OrganelleDef" format=3]
+
+[ext_resource type="Script" path="res://scripts/sim/organelle_def.gd" id="1_qbi6u"]
+
+[resource]
+script = ExtResource("1_qbi6u")
+id = "endoplasmic_reticulum"
+display_name = "Endoplasmic reticulum"
+city_name = "Factory"
+function_text = "Folded canals that make proteins and lipids. Here it stores fat: a mitochondria placed right beside it and linked to it can burn that fat when food runs short."
+city_text = "A factory quickly creates goods and sends them on their way. The ER makes proteins and lipids and holds the reserves that keep production going."
+energy_use = 10.0
+water_use = 10.0
+waste_production = 0.5
+fat_access = true
+max_paired_mitochondria = 1
+unlock_thresholds = {
+"food": 80.0
+}
+allowed_cell_types = PackedInt32Array(0, 1)
+repair_energy_cost = 3.0
+atlas_tile = Vector2i(0, 6)

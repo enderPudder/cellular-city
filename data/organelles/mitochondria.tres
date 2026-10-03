@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="OrganelleDef" format=3]
+
+[ext_resource type="Script" path="res://scripts/sim/organelle_def.gd" id="1_qqccq"]
+
+[resource]
+script = ExtResource("1_qqccq")
+id = "mitochondria"
+display_name = "Mitochondria"
+city_name = "Coal and oil power plant"
+function_text = "Takes in food and breaks it down into chemical energy for the whole cell. Beside an endoplasmic reticulum it can also burn stored fat."
+city_text = "Power plants take in resources that burn hot to turn turbines and create energy. Mitochondria take in food to make the cell's chemical energy."
+energy_use = 20.0
+water_use = 15.0
+food_use = 20.0
+waste_production = 2.0
+energy_output = 150.0
+needs_energy_link = false
+max_load = 150.0
+allowed_cell_types = PackedInt32Array(0, 1)
+repair_energy_cost = 5.0
+atlas_tile = Vector2i(0, 3)
