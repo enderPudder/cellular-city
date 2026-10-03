@@ -16,4 +16,3 @@ waste_removal_plant = 0.5
 needs_energy_link = false
 needs_water_link = false
 allowed_cell_types = PackedInt32Array(0, 1)
-atlas_tile = Vector2i(0, 2)

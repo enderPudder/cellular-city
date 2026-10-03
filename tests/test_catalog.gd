@@ -2,7 +2,7 @@ extends McpTestSuite
 
 const EXPECTED_IDS := [
 	"membrane", "nucleus", "cytoplasm", "mitochondria", "vacuole",
-	"cell_wall", "chromosomes", "chloroplast", "endoplasmic_reticulum", "lysosome",
+	"cell_wall", "chromosomes", "chloroplast", "endoplasmic_reticulum", "lysosome", "golgi_apparatus",
 ]
 
 
@@ -10,7 +10,7 @@ func suite_name() -> String:
 	return "catalog"
 
 
-func test_all_ten_v1_organelles_exist() -> void:
+func test_all_eleven_organelles_exist() -> void:
 	var ids: Array[String] = []
 	for d in OrganelleCatalog.load_all():
 		ids.append(d.id)
@@ -50,3 +50,8 @@ func test_special_roles() -> void:
 	assert_true(by_id["endoplasmic_reticulum"].fat_access)
 	assert_eq(by_id["endoplasmic_reticulum"].max_paired_mitochondria, 1)
 	assert_eq(by_id["nucleus"].requires_adjacent, "chromosomes")
+	assert_gt(by_id["endoplasmic_reticulum"].protein_output, 0.0)
+	assert_eq(by_id["golgi_apparatus"].protein_capacity, 50.0)
+	assert_eq(by_id["lysosome"].protein_effect, "enzymes")
+	assert_eq(by_id["membrane"].protein_effect, "repair")
+	assert_eq(by_id["cell_wall"].protein_effect, "repair")

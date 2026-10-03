@@ -22,6 +22,8 @@ func setup(game: CellGame) -> void:
 	panel.add_child(box)
 	var scroll := ScrollContainer.new()
 	scroll.custom_minimum_size = Vector2(500, 330)
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(_list)
 	box.add_child(scroll)
 	var close := Button.new()
@@ -50,6 +52,9 @@ func _rebuild() -> void:
 		var label := RichTextLabel.new()
 		label.bbcode_enabled = true
 		label.fit_content = true
+		label.scroll_active = false
+		label.custom_minimum_size = Vector2(470, 0)
+		label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		if sim.unlocked_ids.has(d.id):
 			label.text = "[b]%s[/b] = %s\n%s\n[i]%s[/i]\n" % [d.display_name, d.city_name, d.function_text, d.city_text]
 		else:

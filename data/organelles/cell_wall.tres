@@ -17,4 +17,4 @@ allowed_cell_types = PackedInt32Array(1)
 placement_energy_cost = 0.5
 repair_energy_cost = 0.5
 decay_per_second = 0.05
-atlas_tile = Vector2i(2, 3)
+protein_effect = "repair"

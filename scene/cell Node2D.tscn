@@ -290,6 +290,7 @@ tile_set = SubResource("TileSet_85nit")
 script = ExtResource("5_jxrjt")
 organelle_id = "membrane"
 terrain_id = 0
+atlas_tile = Vector2i(2, 0)
 
 [node name="nucleus" type="TileMapLayer" parent="." unique_id=1535477352]
 position = Vector2(577.5, 325)
@@ -302,18 +303,21 @@ position = Vector2(577.5, 325)
 tile_set = SubResource("TileSet_85nit")
 script = ExtResource("7_j1467")
 organelle_id = "vacuole"
+atlas_tile = Vector2i(0, 1)
 
 [node name="cytoplasm" type="TileMapLayer" parent="." unique_id=1018406598]
 position = Vector2(577.5, 325)
 tile_set = SubResource("TileSet_85nit")
 script = ExtResource("7_j1467")
 organelle_id = "cytoplasm"
+atlas_tile = Vector2i(0, 8)
 
 [node name="mitochondria" type="TileMapLayer" parent="." unique_id=654720542]
 position = Vector2(577.5, 325)
 tile_set = SubResource("TileSet_85nit")
 script = ExtResource("7_j1467")
 organelle_id = "mitochondria"
+atlas_tile = Vector2i(0, 2)
 
 [node name="cell wall" type="TileMapLayer" parent="." unique_id=857788592]
 position = Vector2(577.5, 325)
@@ -321,38 +325,50 @@ tile_set = SubResource("TileSet_85nit")
 script = ExtResource("7_j1467")
 organelle_id = "cell_wall"
 terrain_id = 1
+atlas_tile = Vector2i(2, 3)
 
 [node name="chromosomes" type="TileMapLayer" parent="." unique_id=1880881606]
 position = Vector2(577.5, 325)
 tile_set = SubResource("TileSet_85nit")
 script = ExtResource("7_j1467")
 organelle_id = "chromosomes"
+atlas_tile = Vector2i(0, 3)
 
 [node name="chloroplast" type="TileMapLayer" parent="." unique_id=765408526]
 position = Vector2(577.5, 325)
 tile_set = SubResource("TileSet_85nit")
 script = ExtResource("7_j1467")
 organelle_id = "chloroplast"
+atlas_tile = Vector2i(0, 4)
 
 [node name="endoplasmic reculum" type="TileMapLayer" parent="." unique_id=686296858]
 position = Vector2(577.5, 325)
 tile_set = SubResource("TileSet_85nit")
 script = ExtResource("7_j1467")
 organelle_id = "endoplasmic_reticulum"
+atlas_tile = Vector2i(0, 5)
 
 [node name="lysosomes" type="TileMapLayer" parent="." unique_id=1020115901]
 position = Vector2(577.5, 325)
 tile_set = SubResource("TileSet_85nit")
 script = ExtResource("7_j1467")
 organelle_id = "lysosome"
+atlas_tile = Vector2i(0, 6)
 
 [node name="golgoi apparatus" type="TileMapLayer" parent="." unique_id=425251190]
 position = Vector2(577.5, 325)
 tile_set = SubResource("TileSet_85nit")
+script = ExtResource("7_j1467")
+organelle_id = "golgi_apparatus"
+atlas_tile = Vector2i(0, 7)
 
 [node name="vesicles" type="TileMapLayer" parent="." unique_id=1945295106]
 position = Vector2(577.5, 325)
 tile_set = SubResource("TileSet_85nit")
+script = ExtResource("7_j1467")
+organelle_id = "vesicles"
+terrain_id = 2
+atlas_tile = Vector2i(2, 6)
 
 [node name="organell buttons and stuff" type="Control" parent="." unique_id=333664529]
 layout_mode = 3
@@ -364,7 +380,7 @@ layout_mode = 0
 offset_left = 6.0
 offset_top = 32.0
 offset_right = 193.0
-offset_bottom = 405.0
+offset_bottom = 443.0
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
@@ -429,6 +445,10 @@ text = "endoplasmic reculum"
 [node name="lysosome button" type="Button" parent="organell buttons and stuff/MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=128349453]
 layout_mode = 2
 text = "lysosomes"
+
+[node name="golgi apparatus button" type="Button" parent="organell buttons and stuff/MarginContainer/Panel/MarginContainer/VBoxContainer" unique_id=410327023]
+layout_mode = 2
+text = "golgi apparatus"
 
 [node name="MarginContainer2" type="MarginContainer" parent="organell buttons and stuff" unique_id=659973165]
 layout_mode = 0

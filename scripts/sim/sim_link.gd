@@ -2,7 +2,7 @@ class_name SimLink extends RefCounted
 ## A drawn connection. `from_uid` is the consumer, `to_uid` its supplier
 ## (for FAT links: from the mitochondria to the ER).
 
-enum Type { ENERGY, WATER, FAT }
+enum Type { ENERGY, WATER, FAT, PROTEIN }
 
 var from_uid: int = 0
 var to_uid: int = 0

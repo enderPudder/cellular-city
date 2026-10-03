@@ -5,6 +5,8 @@ signal unlocked(def_id: String)
 signal lost(reason: String)
 signal organelle_added(uid: int)
 signal organelle_removed(uid: int, cell: Vector2i, def_id: String)
+signal shipment_dispatched(shipment: Shipment)
+signal shipment_delivered(shipment: Shipment)
 
 const METERS: Array[String] = ["food", "energy", "water", "waste", "fat"]
 const BASE_CAPS := {"food": 200.0, "energy": 500.0, "water": 200.0, "waste": 200.0, "fat": 100.0}
@@ -12,6 +14,9 @@ const STARTING := {"food": 50.0, "energy": 100.0, "water": 60.0, "waste": 0.0, "
 const FAT_FROM_SURPLUS := 0.5
 const NUCLEUS_GRACE := 3.0
 const TOXIC_DAMAGE := 2.0
+const ENZYMES_PER_PROTEIN := 6.0
+const ENZYME_BOOST := 1.5
+const REPAIR_PER_PROTEIN := 3.0
 
 var cell_type: int
 var defs: Dictionary = {}
@@ -28,6 +33,7 @@ var decay_multiplier: float = 1.0
 var _cell_index: Dictionary = {}
 var _next_uid: int = 1
 var _no_nucleus_time: float = 0.0
+var _next_shipment_id: int = 1
 var _fat_paired: Dictionary = {}  # mitochondria uid -> ER uid
 
 
@@ -174,6 +180,8 @@ func infer_link_type(from_uid: int, to_uid: int) -> int:
 		return SimLink.Type.WATER
 	if a.def.energy_output > 0.0 and b.def.fat_access:
 		return SimLink.Type.FAT
+	if a.def.protein_output > 0.0 and b.def.protein_capacity > 0.0:
+		return SimLink.Type.PROTEIN
 	return -1
 
 
@@ -309,9 +317,14 @@ func _run_economy(dt: float) -> void:
 		var d := o.def
 		meters["food"] += d.food_output_for(cell_type) * dt * rate
 		meters["waste"] += d.waste_production * dt * rate
-		var removal := minf(float(meters["waste"]), d.waste_removal_for(cell_type) * dt * rate)
+		var removal_rate := d.waste_removal_for(cell_type)
+		var boost := ENZYME_BOOST if o.enzymes > 0.0 and removal_rate > 0.0 else 1.0
+		var removal := minf(float(meters["waste"]), removal_rate * boost * dt * rate)
 		meters["waste"] -= removal
+		if boost > 1.0:
+			o.enzymes = maxf(0.0, o.enzymes - removal)
 		meters["food"] += removal * d.waste_to_food
+	_run_proteins(active, dt, rate)
 	_clamp_meters()
 
 
@@ -383,3 +396,88 @@ func force_lose(reason: String) -> void:
 	is_lost = true
 	lost_reason = reason
 	lost.emit(reason)
+
+
+# ----- proteins and vesicles -----
+
+func _run_proteins(active: Array[PlacedOrganelle], dt: float, rate: float) -> void:
+	for l in links:
+		if l.type != SimLink.Type.PROTEIN:
+			continue
+		var er: PlacedOrganelle = organelles.get(l.from_uid)
+		var golgi: PlacedOrganelle = organelles.get(l.to_uid)
+		if er == null or golgi == null or not er.running or not golgi.running:
+			continue
+		golgi.proteins = minf(golgi.def.protein_capacity, golgi.proteins + er.def.protein_output * dt * rate)
+	for o in active:
+		if o.def.protein_capacity <= 0.0:
+			continue
+		o.dispatch_timer += dt
+		if o.dispatch_timer < o.def.dispatch_interval:
+			continue
+		o.dispatch_timer = fmod(o.dispatch_timer, o.def.dispatch_interval)
+		_dispatch(o)
+
+
+## Packs a vesicle: half to the nearest lysosome, half to the weakest damaged
+## membrane/cell wall tile. With only one kind of destination it all goes there.
+func _dispatch(golgi: PlacedOrganelle) -> void:
+	var amount := minf(golgi.proteins, golgi.def.dispatch_amount)
+	if amount <= 0.0:
+		return
+	var lysosome := _nearest_with_effect(golgi, "enzymes")
+	var membrane := _weakest_with_effect("repair")
+	if lysosome == null and membrane == null:
+		return
+	golgi.proteins -= amount
+	if lysosome != null and membrane != null:
+		_ship(golgi, lysosome, amount * 0.5, "enzymes")
+		_ship(golgi, membrane, amount * 0.5, "repair")
+	elif lysosome != null:
+		_ship(golgi, lysosome, amount, "enzymes")
+	else:
+		_ship(golgi, membrane, amount, "repair")
+
+
+func _ship(golgi: PlacedOrganelle, target: PlacedOrganelle, proteins: float, effect: String) -> void:
+	var sh := Shipment.make(_next_shipment_id, golgi.uid, target.uid, proteins, effect)
+	_next_shipment_id += 1
+	shipment_dispatched.emit(sh)
+
+
+func _nearest_with_effect(from: PlacedOrganelle, effect: String) -> PlacedOrganelle:
+	var best: PlacedOrganelle = null
+	var best_dist := 1 << 30
+	for o: PlacedOrganelle in organelles.values():
+		if o.def.protein_effect != effect or not o.alive():
+			continue
+		var dist := absi(o.cell.x - from.cell.x) + absi(o.cell.y - from.cell.y)
+		if dist < best_dist or (dist == best_dist and best != null and o.uid < best.uid):
+			best = o
+			best_dist = dist
+	return best
+
+
+## The most damaged organelle that can use repair proteins (null if all are at full health).
+func _weakest_with_effect(effect: String) -> PlacedOrganelle:
+	var best: PlacedOrganelle = null
+	for o: PlacedOrganelle in organelles.values():
+		if o.def.protein_effect != effect or o.health >= 100.0:
+			continue
+		if best == null or o.health < best.health or (o.health == best.health and o.uid < best.uid):
+			best = o
+	return best
+
+
+## Applies a shipment that reached its target. A target that no longer exists
+## simply loses the proteins.
+func deliver(shipment: Shipment) -> void:
+	var o: PlacedOrganelle = organelles.get(shipment.to_uid)
+	if o == null:
+		return
+	match shipment.effect:
+		"enzymes":
+			o.enzymes += shipment.proteins * ENZYMES_PER_PROTEIN
+		"repair":
+			o.health = minf(100.0, o.health + shipment.proteins * REPAIR_PER_PROTEIN)
+	shipment_delivered.emit(shipment)

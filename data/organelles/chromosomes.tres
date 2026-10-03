@@ -18,4 +18,3 @@ unlock_thresholds = {
 allowed_cell_types = PackedInt32Array(0, 1)
 repair_energy_cost = 3.0
 decay_per_second = 0.1
-atlas_tile = Vector2i(0, 3)

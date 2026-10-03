@@ -17,4 +17,4 @@ needs_water_link = false
 allowed_cell_types = PackedInt32Array(0, 1)
 repair_energy_cost = 0.5
 decay_per_second = 0.1
-atlas_tile = Vector2i(2, 0)
+protein_effect = "repair"

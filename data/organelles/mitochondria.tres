@@ -18,4 +18,3 @@ needs_energy_link = false
 max_load = 150.0
 allowed_cell_types = PackedInt32Array(0, 1)
 repair_energy_cost = 5.0
-atlas_tile = Vector2i(0, 6)

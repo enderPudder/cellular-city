@@ -9,6 +9,9 @@ var disabled: bool = false  # knocked out by a bacteria event until repaired
 var energy_ok: bool = false
 var water_ok: bool = false
 var running: bool = false
+var proteins: float = 0.0  # golgi: proteins waiting to be shipped
+var dispatch_timer: float = 0.0
+var enzymes: float = 0.0  # lysosome: boost left from delivered proteins
 
 
 func alive() -> bool:

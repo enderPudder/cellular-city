@@ -17,6 +17,11 @@ func _cell() -> Vector2i:
 	return mouse_cell.call() if mouse_cell.is_valid() else _game.cell_at_mouse()
 
 
+## World position of the pointer (the centre of the overridden cell in tests).
+func _world_pos() -> Vector2:
+	return _game.cell_center(mouse_cell.call()) if mouse_cell.is_valid() else _game.get_global_mouse_position()
+
+
 func _blocked() -> bool:
 	return not _game.running or _game.paused or _game.get_viewport().gui_get_hovered_control() != null
 
@@ -27,7 +32,7 @@ func _process(_delta: float) -> void:
 	var cell := _cell()
 	if Input.is_action_pressed("click"):
 		if _game.tool == "repair":
-			_game.try_repair(cell)
+			_game.repair_area(_world_pos())
 		elif _game.tool != "" and _game.tool != "link":
 			_game.try_place(_game.tool, cell)
 	if Input.is_action_pressed("erase"):

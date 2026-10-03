@@ -21,4 +21,3 @@ unlock_thresholds = {
 allowed_cell_types = PackedInt32Array(0, 1)
 max_group_size_animal = 4
 max_group_size_plant = 25
-atlas_tile = Vector2i(0, 1)

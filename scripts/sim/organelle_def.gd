@@ -42,8 +42,12 @@ enum CellType { ANIMAL, PLANT }
 @export var max_group_size_animal: int = 0
 @export var max_group_size_plant: int = 0
 
-@export_group("Art")
-@export var atlas_tile: Vector2i = Vector2i.ZERO
+@export_group("Proteins")
+@export var protein_output: float = 0.0  # per second, ER: sent to linked golgis
+@export var protein_capacity: float = 0.0  # golgi: how many proteins it can hold
+@export var dispatch_interval: float = 6.0  # golgi: seconds between vesicles
+@export var dispatch_amount: float = 10.0  # golgi: proteins per vesicle
+@export var protein_effect: String = ""  # "enzymes" (lysosome) or "repair" (membrane, cell wall)
 
 
 func food_output_for(cell_type: int) -> float:

@@ -29,21 +29,21 @@ func _rows() -> Array[Dictionary]:
 			"city_text": "City limits control what enters and exits a city, just like a membrane controls what enters and exits a cell.",
 			"energy_use": 0.2, "water_output": 0.6, "food_output_animal": 0.4,
 			"needs_energy_link": false, "needs_water_link": false,
-			"decay_per_second": 0.1, "repair_energy_cost": 0.5, "atlas_tile": Vector2i(2, 0),
+			"decay_per_second": 0.1, "repair_energy_cost": 0.5, "protein_effect": "repair"
 		},
 		{
 			"id": "nucleus", "display_name": "Nucleus", "city_name": "Municipal government",
 			"function_text": "Controls the cell's actions and holds the chromosomes. Every cell needs one, and it only works beside its chromosomes.",
 			"city_text": "The government creates laws and makes sure everything is in order, just like a nucleus. The DNA inside holds the instructions that tell the cell what to do.",
 			"energy_use": 5.0, "water_use": 10.0, "waste_production": 0.5,
-			"requires_adjacent": "chromosomes", "repair_energy_cost": 3.0, "atlas_tile": Vector2i(0, 0),
+			"requires_adjacent": "chromosomes", "repair_energy_cost": 3.0
 		},
 		{
 			"id": "cytoplasm", "display_name": "Cytoplasm", "city_name": "Delivery systems",
 			"function_text": "A jelly-like substance that constantly moves around the cell, carrying food and oxygen to organelles. In plant cells its movement also carries waste away.",
 			"city_text": "People who deliver food to people are like cytoplasm, except they aren't jelly.",
 			"energy_use": 1.0, "water_use": 2.0, "waste_production": 0.1, "waste_removal_plant": 0.5,
-			"needs_energy_link": false, "needs_water_link": false, "atlas_tile": Vector2i(0, 2),
+			"needs_energy_link": false, "needs_water_link": false
 		},
 		{
 			"id": "mitochondria", "display_name": "Mitochondria", "city_name": "Coal and oil power plant",
@@ -51,7 +51,7 @@ func _rows() -> Array[Dictionary]:
 			"city_text": "Power plants take in resources that burn hot to turn turbines and create energy. Mitochondria take in food to make the cell's chemical energy.",
 			"energy_use": 20.0, "water_use": 15.0, "food_use": 20.0, "waste_production": 2.0,
 			"energy_output": 150.0, "max_load": 150.0, "needs_energy_link": false,
-			"repair_energy_cost": 5.0, "atlas_tile": Vector2i(0, 6),
+			"repair_energy_cost": 5.0
 		},
 		{
 			"id": "vacuole", "display_name": "Vacuole", "city_name": "Water tower",
@@ -60,7 +60,7 @@ func _rows() -> Array[Dictionary]:
 			"energy_use": 5.0, "water_use": 15.0,
 			"waste_removal_animal": 3.33, "waste_removal_plant": 3.33, "water_capacity_bonus": 40.0,
 			"max_group_size_animal": 4, "max_group_size_plant": 25,
-			"unlock_thresholds": {"water": 150.0, "waste": 20.0}, "atlas_tile": Vector2i(0, 1),
+			"unlock_thresholds": {"water": 150.0, "waste": 20.0}
 		},
 		{
 			"id": "cell_wall", "display_name": "Cell wall", "city_name": "Flood gates",
@@ -68,7 +68,7 @@ func _rows() -> Array[Dictionary]:
 			"city_text": "Flood gates protect a city from storms and tsunamis. A cell wall is sturdy and keeps the inside of the cell separated from the outside.",
 			"energy_use": 0.1, "water_output": 0.4, "needs_energy_link": false, "needs_water_link": false,
 			"allowed_cell_types": PackedInt32Array([PLANT]), "placement_energy_cost": 0.5,
-			"decay_per_second": 0.05, "repair_energy_cost": 0.5, "atlas_tile": Vector2i(2, 3),
+			"decay_per_second": 0.05, "repair_energy_cost": 0.5, "protein_effect": "repair"
 		},
 		{
 			"id": "chromosomes", "display_name": "Chromosomes", "city_name": "Library",
@@ -76,23 +76,22 @@ func _rows() -> Array[Dictionary]:
 			"city_text": "A library holds information on how to do things, make things and where places are. Chromosomes store information on what the cell should do and look like.",
 			"water_use": 3.0, "waste_production": 0.3, "needs_energy_link": false,
 			"decay_per_second": 0.1, "repair_energy_cost": 3.0,
-			"unlock_thresholds": {"water": 150.0}, "atlas_tile": Vector2i(0, 3),
+			"unlock_thresholds": {"water": 150.0}
 		},
 		{
 			"id": "chloroplast", "display_name": "Chloroplast", "city_name": "Solar panels",
 			"function_text": "Where photosynthesis happens. In plant cells this is where food comes from for the mitochondria to turn into energy.",
 			"city_text": "Solar panels are chloroplasts of a city: they take sunlight and make it into usable energy.",
 			"energy_use": 20.0, "water_use": 10.0, "waste_production": 1.0, "food_output_plant": 20.0,
-			"allowed_cell_types": PackedInt32Array([PLANT]), "repair_energy_cost": 5.0,
-			"atlas_tile": Vector2i(0, 4),
+			"allowed_cell_types": PackedInt32Array([PLANT]), "repair_energy_cost": 5.0
 		},
 		{
 			"id": "endoplasmic_reticulum", "display_name": "Endoplasmic reticulum", "city_name": "Factory",
 			"function_text": "Folded canals that make proteins and lipids. Here it stores fat: a mitochondria placed right beside it and linked to it can burn that fat when food runs short.",
 			"city_text": "A factory quickly creates goods and sends them on their way. The ER makes proteins and lipids and holds the reserves that keep production going.",
 			"energy_use": 10.0, "water_use": 10.0, "waste_production": 0.5,
-			"fat_access": true, "max_paired_mitochondria": 1, "repair_energy_cost": 3.0,
-			"unlock_thresholds": {"food": 180.0, "water": 150.0, "waste": 40.0}, "atlas_tile": Vector2i(0, 5),
+			"fat_access": true, "max_paired_mitochondria": 1, "repair_energy_cost": 3.0, "protein_output": 2.0,
+			"unlock_thresholds": {"food": 180.0, "water": 150.0, "waste": 40.0}
 		},
 		{
 			"id": "lysosome", "display_name": "Lysosome", "city_name": "Waste processing facility",
@@ -100,6 +99,15 @@ func _rows() -> Array[Dictionary]:
 			"city_text": "Waste processing facilities take in garbage and grind it up or burn it for energy. Lysosomes turn waste into usable nutrients.",
 			"energy_use": 15.0, "water_use": 5.0,
 			"waste_removal_animal": 3.0, "waste_removal_plant": 3.0, "waste_to_food": 0.5,
-			"unlock_thresholds": {"waste": 80.0}, "repair_energy_cost": 5.0, "atlas_tile": Vector2i(0, 7),
+			"unlock_thresholds": {"waste": 80.0}, "repair_energy_cost": 5.0, "protein_effect": "enzymes"
+		},
+		{
+			"id": "golgi_apparatus", "display_name": "Golgi apparatus", "city_name": "Post office",
+			"function_text": "Receives proteins from the ER, packs them into vesicles and sends them where they are needed: half to the lysosomes to help break down waste, half to the membrane to repair it. It holds up to 50 proteins.",
+			"city_text": "A post office takes mail and sends it to the right address. The Golgi takes proteins, packages them and labels them for the organelle that needs them.",
+			"energy_use": 20.0, "water_use": 10.0,
+			"protein_capacity": 50.0, "dispatch_interval": 6.0, "dispatch_amount": 10.0,
+			"repair_energy_cost": 5.0,
+			"unlock_thresholds": {"food": 190.0, "water": 170.0, "waste": 60.0}
 		},
 	]

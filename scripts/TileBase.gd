@@ -3,9 +3,10 @@ class_name TileBase extends TileMapLayer
 ## tells this layer what to show.
 
 @export var organelle_id: String = ""
-@export var terrain_id: int = -1  # >= 0 uses terrain autotiling (membrane, cell wall)
-
-var atlas_tile: Vector2i = Vector2i.ZERO
+@export var terrain_id: int = -1  # >= 0 uses terrain autotiling (membrane, cell wall, vesicle track)
+## Which tile of "organelle tilemap.png" (column, row) this layer draws. For terrain
+## layers it is only the first tile placed before autotiling picks the right piece.
+@export var atlas_tile: Vector2i = Vector2i.ZERO
 
 
 func show_tile(cell: Vector2i) -> void:

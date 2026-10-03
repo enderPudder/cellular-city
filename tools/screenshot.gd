@@ -24,6 +24,29 @@ func _initialize() -> void:
 	for c in game.get_children():
 		if c.get_script() != null and c.get_script().get_global_name() in ([&"StartScreen"] if OS.get_cmdline_user_args().has("dialogs") else [&"InfoCard", &"StartScreen"]):
 			c.visible = false
+	var extra := OS.get_cmdline_user_args()
+	if extra.has("golgi"):
+		var mito = game.uid_at(Vector2i(-3, 0))
+		var anchor = game.uid_at(Vector2i(0, -7))
+		var er = game.sim.add_organelle("endoplasmic_reticulum", Vector2i(-4, -3), true)
+		var gol = game.sim.add_organelle("golgi_apparatus", Vector2i(4, 3), true)
+		for pair in [[er, mito], [er, anchor], [gol, mito], [gol, anchor], [er, gol]]:
+			game.sim.add_link(pair[0], pair[1])
+		game.sim.organelles[game.uid_at(Vector2i(-10, 7))].health = 10.0
+		game.sim.organelles[gol].proteins = 30.0
+		game.sim.organelles[gol].dispatch_timer = 5.9
+		game.sim.meters["energy"] = 400.0
+		game._on_tick()
+		for fleet in game.get_children():
+			if fleet.get_script() != null and fleet.get_script().get_global_name() == &"VesicleFleet":
+				for i in 22:
+					fleet.step(0.1)
+	for c in game.get_children():
+		var name = c.get_script().get_global_name() if c.get_script() != null else &""
+		if name == &"BuildMenu" and extra.has("tip"):
+			c.show_tip_for("nucleus", game.get_node("organell buttons and stuff/MarginContainer/Panel/MarginContainer/VBoxContainer/nucleus button"))
+		if name == &"Encyclopedia" and extra.has("enc"):
+			c.toggle()
 	for i in 20:
 		await process_frame
 	root.get_viewport().get_texture().get_image().save_png(out)

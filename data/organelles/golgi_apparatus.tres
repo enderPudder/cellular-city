@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="OrganelleDef" format=3]
+
+[ext_resource type="Script" path="res://scripts/sim/organelle_def.gd" id="1_ykbil"]
+
+[resource]
+script = ExtResource("1_ykbil")
+id = "golgi_apparatus"
+display_name = "Golgi apparatus"
+city_name = "Post office"
+function_text = "Receives proteins from the ER, packs them into vesicles and sends them where they are needed: half to the lysosomes to help break down waste, half to the membrane to repair it. It holds up to 50 proteins."
+city_text = "A post office takes mail and sends it to the right address. The Golgi takes proteins, packages them and labels them for the organelle that needs them."
+energy_use = 20.0
+water_use = 10.0
+unlock_thresholds = {
+"food": 190.0,
+"waste": 60.0,
+"water": 170.0
+}
+allowed_cell_types = PackedInt32Array(0, 1)
+repair_energy_cost = 5.0
+protein_capacity = 50.0

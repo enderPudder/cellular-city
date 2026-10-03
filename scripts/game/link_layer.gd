@@ -6,6 +6,7 @@ const COLORS := {
 	SimLink.Type.ENERGY: Color("f2d64b"),
 	SimLink.Type.WATER: Color("4aa3e0"),
 	SimLink.Type.FAT: Color("d9c7a0"),
+	SimLink.Type.PROTEIN: Color("c277e8"),
 }
 const FLOW_SPEED := 0.6
 
@@ -47,6 +48,11 @@ func _draw() -> void:
 			draw_arc(_game.cell_center(o.cell), 6.0, 0.0, TAU, 16, Color("e03c3c"), 1.5)
 		elif o.health < 50.0:
 			draw_arc(_game.cell_center(o.cell), 6.0, 0.0, TAU, 16, Color("e0a43c"), 1.0)
+	if _game.tool == "repair" and _game.running and not _game.paused \
+			and get_viewport().gui_get_hovered_control() == null:
+		var mouse := get_global_mouse_position()
+		draw_circle(mouse, CellGame.REPAIR_RADIUS, Color(0.3, 1.0, 0.5, 0.12))
+		draw_arc(mouse, CellGame.REPAIR_RADIUS, 0.0, TAU, 48, Color(0.3, 1.0, 0.5, 0.9), 1.5)
 	if _game.link_drag_from != -1 and sim.organelles.has(_game.link_drag_from):
 		var start := _game.cell_center((sim.organelles[_game.link_drag_from] as PlacedOrganelle).cell)
 		draw_line(start, get_global_mouse_position(), Color.WHITE, 1.0)
