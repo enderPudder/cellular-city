@@ -191,3 +191,111 @@ func remove_link(from_uid: int, to_uid: int, type: int) -> void:
 func remove_links_of(uid: int) -> void:
 	links.assign(links.filter(func(l: SimLink) -> bool:
 		return l.from_uid != uid and l.to_uid != uid))
+
+
+# ----- tick -----
+
+func tick(dt: float) -> void:
+	if is_lost:
+		return
+	elapsed += dt
+	_resolve_supply()
+	_update_running()
+	_run_economy(dt)
+
+
+func _resolve_supply() -> void:
+	for o: PlacedOrganelle in organelles.values():
+		o.water_ok = not o.def.needs_water_link
+		o.energy_ok = not o.def.needs_energy_link
+	for l in links:
+		if l.type != SimLink.Type.WATER:
+			continue
+		var consumer: PlacedOrganelle = organelles.get(l.from_uid)
+		var source: PlacedOrganelle = organelles.get(l.to_uid)
+		if consumer != null and source != null and source.def.water_output > 0.0 and source.alive():
+			consumer.water_ok = true
+	var used := {}
+	for l in links:
+		if l.type != SimLink.Type.ENERGY:
+			continue
+		var consumer: PlacedOrganelle = organelles.get(l.from_uid)
+		var source: PlacedOrganelle = organelles.get(l.to_uid)
+		if consumer == null or source == null:
+			continue
+		if source.def.max_load <= 0.0 or not source.alive() or not source.water_ok:
+			continue
+		var load_now: float = used.get(source.uid, 0.0)
+		if load_now + consumer.def.energy_use <= source.def.max_load:
+			used[source.uid] = load_now + consumer.def.energy_use
+			consumer.energy_ok = true
+
+
+func _update_running() -> void:
+	for o: PlacedOrganelle in organelles.values():
+		o.running = o.alive() and o.energy_ok and o.water_ok and _adjacency_ok(o)
+
+
+func _adjacency_ok(o: PlacedOrganelle) -> bool:
+	if o.def.requires_adjacent == "":
+		return true
+	for n in _neighbors(o.cell):
+		var uid: int = _cell_index.get(n, -1)
+		if uid == -1:
+			continue
+		var other: PlacedOrganelle = organelles[uid]
+		if other.def.id == o.def.requires_adjacent and other.alive():
+			return true
+	return false
+
+
+func _run_economy(dt: float) -> void:
+	var active: Array[PlacedOrganelle] = []
+	for o: PlacedOrganelle in organelles.values():
+		if o.running:
+			active.append(o)
+	# 1. mitochondria turn fuel into energy
+	for o in active:
+		if o.def.energy_output > 0.0:
+			meters["energy"] += o.def.energy_output * dt * _fuel_fraction(o, dt)
+	# 2. energy is spent; a shortage scales everyone's output down
+	var energy_demand := 0.0
+	var water_demand := 0.0
+	for o in active:
+		energy_demand += o.def.energy_use * dt
+		water_demand += o.def.water_use * dt
+	var energy_factor := 1.0 if energy_demand <= 0.0 else minf(1.0, float(meters["energy"]) / energy_demand)
+	meters["energy"] -= energy_demand * energy_factor
+	# 3. water is collected, then spent
+	for o in active:
+		if o.def.water_output > 0.0:
+			var yield_fraction := 1.0 if o.health >= 90.0 else 1.0 / 16.0
+			meters["water"] += o.def.water_output * dt * energy_factor * yield_fraction
+	var water_factor := 1.0 if water_demand <= 0.0 else minf(1.0, float(meters["water"]) / water_demand)
+	meters["water"] -= water_demand * water_factor
+	# 4. food and waste follow the slower of the two
+	var rate := minf(energy_factor, water_factor)
+	for o in active:
+		var d := o.def
+		meters["food"] += d.food_output_for(cell_type) * dt * rate
+		meters["waste"] += d.waste_production * dt * rate
+		var removal := minf(float(meters["waste"]), d.waste_removal_for(cell_type) * dt * rate)
+		meters["waste"] -= removal
+		meters["food"] += removal * d.waste_to_food
+	_clamp_meters()
+
+
+## Fraction (0..1) of a mitochondria's fuel need that was satisfied this tick.
+func _fuel_fraction(o: PlacedOrganelle, dt: float) -> float:
+	var need := o.def.food_use * dt
+	if need <= 0.0:
+		return 1.0
+	var from_food := minf(float(meters["food"]), need)
+	meters["food"] -= from_food
+	return from_food / need
+
+
+func _clamp_meters() -> void:
+	var caps := capacities()
+	for m in METERS:
+		meters[m] = clampf(float(meters[m]), 0.0, float(caps[m]))
