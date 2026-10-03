@@ -60,7 +60,7 @@ func _rows() -> Array[Dictionary]:
 			"energy_use": 5.0, "water_use": 15.0,
 			"waste_removal_animal": 3.33, "waste_removal_plant": 3.33, "water_capacity_bonus": 40.0,
 			"max_group_size_animal": 4, "max_group_size_plant": 25,
-			"unlock_thresholds": {"water": 80.0}, "atlas_tile": Vector2i(0, 1),
+			"unlock_thresholds": {"water": 150.0, "waste": 20.0}, "atlas_tile": Vector2i(0, 1),
 		},
 		{
 			"id": "cell_wall", "display_name": "Cell wall", "city_name": "Flood gates",
@@ -76,7 +76,7 @@ func _rows() -> Array[Dictionary]:
 			"city_text": "A library holds information on how to do things, make things and where places are. Chromosomes store information on what the cell should do and look like.",
 			"water_use": 3.0, "waste_production": 0.3, "needs_energy_link": false,
 			"decay_per_second": 0.1, "repair_energy_cost": 3.0,
-			"unlock_thresholds": {"water": 50.0}, "atlas_tile": Vector2i(0, 3),
+			"unlock_thresholds": {"water": 150.0}, "atlas_tile": Vector2i(0, 3),
 		},
 		{
 			"id": "chloroplast", "display_name": "Chloroplast", "city_name": "Solar panels",
@@ -92,7 +92,7 @@ func _rows() -> Array[Dictionary]:
 			"city_text": "A factory quickly creates goods and sends them on their way. The ER makes proteins and lipids and holds the reserves that keep production going.",
 			"energy_use": 10.0, "water_use": 10.0, "waste_production": 0.5,
 			"fat_access": true, "max_paired_mitochondria": 1, "repair_energy_cost": 3.0,
-			"unlock_thresholds": {"food": 80.0}, "atlas_tile": Vector2i(0, 5),
+			"unlock_thresholds": {"food": 180.0, "water": 150.0, "waste": 40.0}, "atlas_tile": Vector2i(0, 5),
 		},
 		{
 			"id": "lysosome", "display_name": "Lysosome", "city_name": "Waste processing facility",
@@ -100,6 +100,6 @@ func _rows() -> Array[Dictionary]:
 			"city_text": "Waste processing facilities take in garbage and grind it up or burn it for energy. Lysosomes turn waste into usable nutrients.",
 			"energy_use": 15.0, "water_use": 5.0,
 			"waste_removal_animal": 3.0, "waste_removal_plant": 3.0, "waste_to_food": 0.5,
-			"unlock_thresholds": {"waste": 25.0}, "repair_energy_cost": 5.0, "atlas_tile": Vector2i(0, 7),
+			"unlock_thresholds": {"waste": 80.0}, "repair_energy_cost": 5.0, "atlas_tile": Vector2i(0, 7),
 		},
 	]

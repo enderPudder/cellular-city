@@ -16,6 +16,7 @@ func setup(game: CellGame) -> void:
 	panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	panel.grow_vertical = Control.GROW_DIRECTION_BOTH
 	panel.custom_minimum_size = Vector2(420, 0)
+	panel.theme = MetalUi.theme()
 	add_child(panel)
 	var box := VBoxContainer.new()
 	panel.add_child(box)

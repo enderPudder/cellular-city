@@ -13,7 +13,8 @@ func _initialize() -> void:
 	game.start_run(animal)
 	for i in 12:
 		game._on_tick()
-	game.sim.meters["water"] = 100.0
+	game.sim.meters["water"] = 200.0
+	game.sim.meters["waste"] = 30.0
 	game.sim.refresh_unlocks()
 	game.try_place("vacuole", Vector2i(-6, 3))
 	var vac = game.uid_at(Vector2i(-6, 3))
@@ -21,7 +22,7 @@ func _initialize() -> void:
 	game.sim.add_link(vac, game.uid_at(Vector2i(0, -10)))
 	game._on_tick()
 	for c in game.get_children():
-		if c.get_script() != null and c.get_script().get_global_name() in [&"InfoCard", &"StartScreen"]:
+		if c.get_script() != null and c.get_script().get_global_name() in ([&"StartScreen"] if OS.get_cmdline_user_args().has("dialogs") else [&"InfoCard", &"StartScreen"]):
 			c.visible = false
 	for i in 20:
 		await process_frame

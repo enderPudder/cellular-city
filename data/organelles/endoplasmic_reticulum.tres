@@ -15,7 +15,9 @@ waste_production = 0.5
 fat_access = true
 max_paired_mitochondria = 1
 unlock_thresholds = {
-"food": 80.0
+"food": 180.0,
+"waste": 40.0,
+"water": 150.0
 }
 allowed_cell_types = PackedInt32Array(0, 1)
 repair_energy_cost = 3.0

@@ -15,7 +15,7 @@ waste_removal_animal = 3.0
 waste_removal_plant = 3.0
 waste_to_food = 0.5
 unlock_thresholds = {
-"waste": 25.0
+"waste": 80.0
 }
 allowed_cell_types = PackedInt32Array(0, 1)
 repair_energy_cost = 5.0

@@ -18,6 +18,7 @@ func setup(game: CellGame) -> void:
 	var panel := PanelContainer.new()
 	panel.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, 8)
 	panel.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	panel.theme = MetalUi.theme()
 	add_child(panel)
 	var box := VBoxContainer.new()
 	panel.add_child(box)
@@ -40,6 +41,7 @@ func setup(game: CellGame) -> void:
 	book.text = "Encyclopedia"
 	book.pressed.connect(func() -> void: get_tree().call_group("encyclopedia", "toggle"))
 	box.add_child(book)
+	_tip.theme = MetalUi.theme()
 	_tip.add_theme_color_override("font_color", Color.WHITE)
 	_tip.add_theme_color_override("font_outline_color", Color.BLACK)
 	_tip.add_theme_constant_override("outline_size", 4)

@@ -14,6 +14,7 @@ func setup(game: CellGame) -> void:
 	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	panel.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	panel.grow_vertical = Control.GROW_DIRECTION_BOTH
+	panel.theme = MetalUi.theme()
 	add_child(panel)
 	var box := VBoxContainer.new()
 	panel.add_child(box)

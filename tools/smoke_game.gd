@@ -41,7 +41,8 @@ func _run_cell(game, animal: bool) -> void:
 		game._on_tick()
 	_check(not game.sim.is_lost, tag + ": alive after 5 ticks")
 	# vacuole unlocks once water >= 80
-	game.sim.meters["water"] = 100.0
+	game.sim.meters["water"] = 200.0
+	game.sim.meters["waste"] = 30.0
 	game.sim.refresh_unlocks()
 	_check(game.sim.unlocked_ids.has("vacuole"), tag + ": vacuole unlocked")
 	_check(game.try_place("vacuole", Vector2i(-5, 2)) == "", tag + ": vacuole placed")

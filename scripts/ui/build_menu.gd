@@ -38,6 +38,7 @@ func setup(game: CellGame) -> void:
 	bar.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 8)
 	bar.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	bar.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	bar.theme = MetalUi.theme()
 	add_child(bar)
 	var row := HBoxContainer.new()
 	bar.add_child(row)
@@ -91,15 +92,20 @@ func _refresh() -> void:
 		var locked := not sim.unlocked_ids.has(id)
 		b.disabled = locked
 		if locked:
-			var parts: Array[String] = []
+			var first := ""
 			var needs: Array[String] = []
 			var progress := sim.unlock_progress(id)
 			for meter in progress:
-				parts.append("%d/%d" % [progress[meter][0], progress[meter][1]])
+				if progress[meter][0] >= progress[meter][1]:
+					continue
+				if first == "":
+					first = "%d/%d" % [progress[meter][0], progress[meter][1]]
 				needs.append("%s %d (now %d)" % [meter, progress[meter][1], progress[meter][0]])
-			b.text = "%s %s" % [_base_text[id], ", ".join(parts)]
+			if needs.size() > 1:
+				first += "+"
+			b.text = "%s %s" % [_base_text[id], first]
 			b.tooltip_text = "Locked: reach %s to unlock.\n\n%s" % [" and ".join(needs), _full_tip.get(id, "")]
-			b.add_theme_font_size_override("font_size", 11)
+			b.add_theme_font_size_override("font_size", 10)
 		else:
 			b.text = _base_text[id]
 			b.tooltip_text = _full_tip.get(id, "")
