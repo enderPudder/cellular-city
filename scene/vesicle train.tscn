@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://cvw0j2ynbxbla"]
+
+[ext_resource type="Texture2D" uid="uid://mhu2jm7ajg0y" path="res://assets/organelle tilemap.png" id="1_n2qyb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qgxmn"]
+atlas = ExtResource("1_n2qyb")
+region = Rect2(80, 80, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4o0m"]
+atlas = ExtResource("1_n2qyb")
+region = Rect2(64, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_csb4h"]
+atlas = ExtResource("1_n2qyb")
+region = Rect2(96, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fegdo"]
+atlas = ExtResource("1_n2qyb")
+region = Rect2(80, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j2r2i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qgxmn")
+}],
+"loop": 1,
+"name": &"down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4o0m")
+}],
+"loop": 1,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_csb4h")
+}],
+"loop": 1,
+"name": &"right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fegdo")
+}],
+"loop": 1,
+"name": &"up",
+"speed": 5.0
+}]
+
+[node name="vesicle train" type="CharacterBody2D" unique_id=1647056141]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2007471223]
+sprite_frames = SubResource("SpriteFrames_j2r2i")
+animation = &"down"

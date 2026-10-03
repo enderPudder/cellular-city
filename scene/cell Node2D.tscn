@@ -1,0 +1,317 @@
+[gd_scene format=3 uid="uid://daxmie2x1a0dn"]
+
+[ext_resource type="Texture2D" uid="uid://fj6qo1g1jpdn" path="res://assets/plant backround.png" id="1_pv08s"]
+[ext_resource type="Texture2D" uid="uid://cayhexwia5cjm" path="res://assets/veins backround.png" id="2_jxrjt"]
+[ext_resource type="Script" uid="uid://lpn1tcl2eh16" path="res://scripts/backround.gd" id="3_0yf8f"]
+[ext_resource type="Texture2D" uid="uid://mhu2jm7ajg0y" path="res://assets/organelle tilemap.png" id="4_k4h0s"]
+[ext_resource type="Script" uid="uid://d05uftku1o2bp" path="res://scripts/organelle scripts/membrane.gd" id="5_jxrjt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4e2tx"]
+atlas = ExtResource("1_pv08s")
+region = Rect2(0, 0, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y16a6"]
+atlas = ExtResource("1_pv08s")
+region = Rect2(1155, 0, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vpune"]
+atlas = ExtResource("1_pv08s")
+region = Rect2(2310, 0, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rg3r2"]
+atlas = ExtResource("1_pv08s")
+region = Rect2(3465, 0, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfmm5"]
+atlas = ExtResource("1_pv08s")
+region = Rect2(0, 650, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j2a5w"]
+atlas = ExtResource("1_pv08s")
+region = Rect2(1155, 650, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n12p0"]
+atlas = ExtResource("1_pv08s")
+region = Rect2(2310, 650, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3wdk3"]
+atlas = ExtResource("1_pv08s")
+region = Rect2(3465, 650, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5oou2"]
+atlas = ExtResource("1_pv08s")
+region = Rect2(0, 1300, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5408"]
+atlas = ExtResource("1_pv08s")
+region = Rect2(1155, 1300, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3mqmg"]
+atlas = ExtResource("1_pv08s")
+region = Rect2(2310, 1300, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0qu6l"]
+atlas = ExtResource("1_pv08s")
+region = Rect2(3465, 1300, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vmtqc"]
+atlas = ExtResource("1_pv08s")
+region = Rect2(0, 1950, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tsq17"]
+atlas = ExtResource("2_jxrjt")
+region = Rect2(0, 0, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85nit"]
+atlas = ExtResource("2_jxrjt")
+region = Rect2(1155, 0, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amo6b"]
+atlas = ExtResource("2_jxrjt")
+region = Rect2(2310, 0, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_se7w5"]
+atlas = ExtResource("2_jxrjt")
+region = Rect2(3465, 0, 1155, 650)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j2r2i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4e2tx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y16a6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vpune")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rg3r2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bfmm5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j2a5w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n12p0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3wdk3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5oou2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e5408")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3mqmg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0qu6l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vmtqc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vmtqc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vmtqc")
+}],
+"loop": 1,
+"name": &"plant leaf",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tsq17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85nit")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amo6b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_se7w5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tsq17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tsq17")
+}],
+"loop": 1,
+"name": &"veins",
+"speed": 7.0
+}]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_se7w5"]
+texture = ExtResource("4_k4h0s")
+0:0/0 = 0
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/terrains_peering_bit/right_side = 0
+1:0/0/terrains_peering_bit/bottom_side = 0
+2:0/0 = 0
+2:0/0/terrain_set = 0
+2:0/0/terrains_peering_bit/right_side = 0
+2:0/0/terrains_peering_bit/left_side = 0
+3:0/0 = 0
+3:0/0/terrain_set = 0
+3:0/0/terrains_peering_bit/bottom_side = 0
+3:0/0/terrains_peering_bit/left_side = 0
+0:1/0 = 0
+1:1/0 = 0
+1:1/0/terrain_set = 0
+1:1/0/terrains_peering_bit/bottom_side = 0
+1:1/0/terrains_peering_bit/top_side = 0
+3:1/0 = 0
+3:1/0/terrain_set = 0
+3:1/0/terrains_peering_bit/bottom_side = 0
+3:1/0/terrains_peering_bit/top_side = 0
+0:2/0 = 0
+1:2/0 = 0
+1:2/0/terrain_set = 0
+1:2/0/terrains_peering_bit/right_side = 0
+1:2/0/terrains_peering_bit/top_side = 0
+2:2/0 = 0
+2:2/0/terrain_set = 0
+2:2/0/terrains_peering_bit/right_side = 0
+2:2/0/terrains_peering_bit/left_side = 0
+3:2/0 = 0
+3:2/0/terrain_set = 0
+3:2/0/terrains_peering_bit/left_side = 0
+3:2/0/terrains_peering_bit/top_side = 0
+0:3/0 = 0
+1:3/0 = 0
+1:3/0/terrain_set = 0
+1:3/0/terrains_peering_bit/right_side = 1
+1:3/0/terrains_peering_bit/bottom_side = 1
+2:3/0 = 0
+2:3/0/terrain_set = 0
+2:3/0/terrains_peering_bit/right_side = 1
+2:3/0/terrains_peering_bit/left_side = 1
+3:3/0 = 0
+3:3/0/terrain_set = 0
+3:3/0/terrains_peering_bit/bottom_side = 1
+3:3/0/terrains_peering_bit/left_side = 1
+0:4/0 = 0
+1:4/0 = 0
+1:4/0/terrain_set = 0
+1:4/0/terrains_peering_bit/bottom_side = 1
+1:4/0/terrains_peering_bit/top_side = 1
+3:4/0 = 0
+3:4/0/terrain_set = 0
+3:4/0/terrains_peering_bit/bottom_side = 1
+3:4/0/terrains_peering_bit/top_side = 1
+0:5/0 = 0
+1:5/0 = 0
+1:5/0/terrain_set = 0
+1:5/0/terrains_peering_bit/right_side = 1
+1:5/0/terrains_peering_bit/top_side = 1
+2:5/0 = 0
+2:5/0/terrain_set = 0
+2:5/0/terrains_peering_bit/right_side = 1
+2:5/0/terrains_peering_bit/left_side = 1
+3:5/0 = 0
+3:5/0/terrain_set = 0
+3:5/0/terrains_peering_bit/left_side = 1
+3:5/0/terrains_peering_bit/top_side = 1
+0:6/0 = 0
+1:6/0 = 0
+1:6/0/terrain_set = 0
+1:6/0/terrains_peering_bit/right_side = 2
+1:6/0/terrains_peering_bit/bottom_side = 2
+2:6/0 = 0
+2:6/0/terrain_set = 0
+2:6/0/terrains_peering_bit/right_side = 2
+2:6/0/terrains_peering_bit/left_side = 2
+3:6/0 = 0
+3:6/0/terrain_set = 0
+3:6/0/terrains_peering_bit/bottom_side = 2
+3:6/0/terrains_peering_bit/left_side = 2
+0:7/0 = 0
+1:7/0 = 0
+1:7/0/terrain_set = 0
+1:7/0/terrains_peering_bit/bottom_side = 2
+1:7/0/terrains_peering_bit/top_side = 2
+3:7/0 = 0
+3:7/0/terrain_set = 0
+3:7/0/terrains_peering_bit/bottom_side = 2
+3:7/0/terrains_peering_bit/top_side = 2
+1:8/0 = 0
+1:8/0/terrain_set = 0
+1:8/0/terrains_peering_bit/right_side = 2
+1:8/0/terrains_peering_bit/top_side = 2
+2:8/0 = 0
+2:8/0/terrain_set = 0
+2:8/0/terrains_peering_bit/right_side = 2
+2:8/0/terrains_peering_bit/left_side = 2
+3:8/0 = 0
+3:8/0/terrain_set = 0
+3:8/0/terrains_peering_bit/left_side = 2
+3:8/0/terrains_peering_bit/top_side = 2
+0:8/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_85nit"]
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "membrane terrain"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+terrain_set_0/terrain_1/name = "cell wall terrain"
+terrain_set_0/terrain_1/color = Color(0.5019608, 0.4392157, 1, 1)
+terrain_set_0/terrain_2/name = "train terrain"
+terrain_set_0/terrain_2/color = Color(0.47058824, 0, 0.2509804, 1)
+sources/0 = SubResource("TileSetAtlasSource_se7w5")
+
+[node name="cell Node2D" type="Node2D" unique_id=2001838377]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=971296852]
+
+[node name="backround" type="AnimatedSprite2D" parent="." unique_id=1646096353]
+sprite_frames = SubResource("SpriteFrames_j2r2i")
+animation = &"plant leaf"
+frame_progress = 0.46970642
+script = ExtResource("3_0yf8f")
+
+[node name="membrane" type="TileMapLayer" parent="." unique_id=1323616030]
+tile_set = SubResource("TileSet_85nit")
+script = ExtResource("5_jxrjt")
+top_middle_tile = Vector2(2, 0)
+
+[node name="nucleus" type="TileMapLayer" parent="." unique_id=1535477352]
+tile_set = SubResource("TileSet_85nit")
+
+[node name="vacuole" type="TileMapLayer" parent="." unique_id=629359731]
+tile_set = SubResource("TileSet_85nit")
+
+[node name="cytoplasm" type="TileMapLayer" parent="." unique_id=1018406598]
+tile_set = SubResource("TileSet_85nit")
+
+[node name="mitochondria" type="TileMapLayer" parent="." unique_id=654720542]
+tile_set = SubResource("TileSet_85nit")
+
+[node name="cell wall" type="TileMapLayer" parent="." unique_id=857788592]
+tile_set = SubResource("TileSet_85nit")
+
+[node name="chromosomes" type="TileMapLayer" parent="." unique_id=1880881606]
+tile_set = SubResource("TileSet_85nit")
+
+[node name="chloroplast" type="TileMapLayer" parent="." unique_id=765408526]
+tile_set = SubResource("TileSet_85nit")
+
+[node name="endoplasmic reculum" type="TileMapLayer" parent="." unique_id=686296858]
+tile_set = SubResource("TileSet_85nit")
+
+[node name="lysosomes" type="TileMapLayer" parent="." unique_id=1020115901]
+tile_set = SubResource("TileSet_85nit")
+
+[node name="golgoi apparatus" type="TileMapLayer" parent="." unique_id=425251190]
+tile_set = SubResource("TileSet_85nit")
+
+[node name="vesicles" type="TileMapLayer" parent="." unique_id=1945295106]
+tile_set = SubResource("TileSet_85nit")
