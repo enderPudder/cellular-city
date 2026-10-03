@@ -9,6 +9,7 @@ signal organelle_removed(uid: int, cell: Vector2i, def_id: String)
 const METERS: Array[String] = ["food", "energy", "water", "waste", "fat"]
 const BASE_CAPS := {"food": 200.0, "energy": 500.0, "water": 200.0, "waste": 200.0, "fat": 100.0}
 const STARTING := {"food": 50.0, "energy": 100.0, "water": 60.0, "waste": 0.0, "fat": 30.0}
+const FAT_FROM_SURPLUS := 0.5
 
 var cell_type: int
 var defs: Dictionary = {}
@@ -24,6 +25,7 @@ var decay_multiplier: float = 1.0
 
 var _cell_index: Dictionary = {}
 var _next_uid: int = 1
+var _fat_paired: Dictionary = {}  # mitochondria uid -> ER uid
 
 
 func _init(p_defs: Array, p_cell_type: int) -> void:
@@ -133,6 +135,10 @@ func are_adjacent(a_uid: int, b_uid: int) -> bool:
 	return absi(a.cell.x - b.cell.x) + absi(a.cell.y - b.cell.y) == 1
 
 
+func is_fat_paired(mito_uid: int) -> bool:
+	return _fat_paired.has(mito_uid)
+
+
 func _neighbors(c: Vector2i) -> Array[Vector2i]:
 	return [c + Vector2i.LEFT, c + Vector2i.RIGHT, c + Vector2i.UP, c + Vector2i.DOWN]
 
@@ -229,6 +235,24 @@ func _resolve_supply() -> void:
 		if load_now + consumer.def.energy_use <= source.def.max_load:
 			used[source.uid] = load_now + consumer.def.energy_use
 			consumer.energy_ok = true
+	_fat_paired.clear()
+	var er_taken := {}
+	for l in links:
+		if l.type != SimLink.Type.FAT or _fat_paired.has(l.from_uid):
+			continue
+		var m: PlacedOrganelle = organelles.get(l.from_uid)
+		var er: PlacedOrganelle = organelles.get(l.to_uid)
+		if m == null or er == null:
+			continue
+		if m.def.energy_output <= 0.0 or not er.def.fat_access or not er.alive():
+			continue
+		if not are_adjacent(m.uid, er.uid):
+			continue
+		var taken: int = er_taken.get(er.uid, 0)
+		if taken >= er.def.max_paired_mitochondria:
+			continue
+		er_taken[er.uid] = taken + 1
+		_fat_paired[m.uid] = er.uid
 
 
 func _update_running() -> void:
@@ -291,11 +315,17 @@ func _fuel_fraction(o: PlacedOrganelle, dt: float) -> float:
 	if need <= 0.0:
 		return 1.0
 	var from_food := minf(float(meters["food"]), need)
+	var from_fat := 0.0
+	if from_food < need and _fat_paired.has(o.uid):
+		from_fat = minf(float(meters["fat"]), need - from_food)
 	meters["food"] -= from_food
-	return from_food / need
+	meters["fat"] -= from_fat
+	return (from_food + from_fat) / need
 
 
 func _clamp_meters() -> void:
 	var caps := capacities()
+	var surplus := maxf(0.0, float(meters["food"]) - float(caps["food"]))
+	meters["fat"] += surplus * FAT_FROM_SURPLUS
 	for m in METERS:
 		meters[m] = clampf(float(meters[m]), 0.0, float(caps[m]))
