@@ -10,6 +10,8 @@ const METERS: Array[String] = ["food", "energy", "water", "waste", "fat"]
 const BASE_CAPS := {"food": 200.0, "energy": 500.0, "water": 200.0, "waste": 200.0, "fat": 100.0}
 const STARTING := {"food": 50.0, "energy": 100.0, "water": 60.0, "waste": 0.0, "fat": 30.0}
 const FAT_FROM_SURPLUS := 0.5
+const NUCLEUS_GRACE := 3.0
+const TOXIC_DAMAGE := 2.0
 
 var cell_type: int
 var defs: Dictionary = {}
@@ -25,6 +27,7 @@ var decay_multiplier: float = 1.0
 
 var _cell_index: Dictionary = {}
 var _next_uid: int = 1
+var _no_nucleus_time: float = 0.0
 var _fat_paired: Dictionary = {}  # mitochondria uid -> ER uid
 
 
@@ -205,9 +208,12 @@ func tick(dt: float) -> void:
 	if is_lost:
 		return
 	elapsed += dt
+	_apply_decay(dt)
 	_resolve_supply()
 	_update_running()
 	_run_economy(dt)
+	refresh_unlocks()
+	_check_nucleus(dt)
 
 
 func _resolve_supply() -> void:
@@ -329,3 +335,51 @@ func _clamp_meters() -> void:
 	meters["fat"] += surplus * FAT_FROM_SURPLUS
 	for m in METERS:
 		meters[m] = clampf(float(meters[m]), 0.0, float(caps[m]))
+
+
+func _apply_decay(dt: float) -> void:
+	var toxic := float(meters["waste"]) >= float(capacities()["waste"])
+	for o: PlacedOrganelle in organelles.values():
+		var loss := o.def.decay_per_second * decay_multiplier
+		if toxic:
+			loss += TOXIC_DAMAGE
+		if loss > 0.0:
+			o.health = maxf(0.0, o.health - loss * dt)
+
+
+func needs_repair(uid: int) -> bool:
+	var o: PlacedOrganelle = organelles.get(uid)
+	return o != null and (o.disabled or o.health < 100.0)
+
+
+func repair(uid: int) -> bool:
+	var o: PlacedOrganelle = organelles.get(uid)
+	if o == null or not needs_repair(uid):
+		return false
+	if float(meters["energy"]) < o.def.repair_energy_cost:
+		return false
+	meters["energy"] -= o.def.repair_energy_cost
+	o.health = 100.0
+	o.disabled = false
+	return true
+
+
+func _check_nucleus(dt: float) -> void:
+	if not nucleus_required:
+		return
+	var has_nucleus := false
+	for o: PlacedOrganelle in organelles.values():
+		if o.def.id == "nucleus" and o.running:
+			has_nucleus = true
+			break
+	_no_nucleus_time = 0.0 if has_nucleus else _no_nucleus_time + dt
+	if _no_nucleus_time >= NUCLEUS_GRACE:
+		force_lose("nucleus")
+
+
+func force_lose(reason: String) -> void:
+	if is_lost:
+		return
+	is_lost = true
+	lost_reason = reason
+	lost.emit(reason)
