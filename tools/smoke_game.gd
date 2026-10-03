@@ -34,9 +34,9 @@ func _run_cell(game, animal: bool) -> void:
 	game.start_run(animal)
 	await process_frame
 	_check(game.running, tag + ": running after start_run")
-	_check(_tiles(game, "membrane") == 120, tag + ": membrane tiles mirrored, got %d" % _tiles(game, "membrane"))
+	_check(_tiles(game, "membrane") == 76, tag + ": membrane tiles mirrored, got %d" % _tiles(game, "membrane"))
 	_check(_tiles(game, "nucleus") == 1, tag + ": nucleus tile")
-	_check(_tiles(game, "cell wall") == (128 if not animal else 0), tag + ": cell wall tiles, got %d" % _tiles(game, "cell wall"))
+	_check(_tiles(game, "cell wall") == (84 if not animal else 0), tag + ": cell wall tiles, got %d" % _tiles(game, "cell wall"))
 	for i in 5:
 		game._on_tick()
 	_check(not game.sim.is_lost, tag + ": alive after 5 ticks")
@@ -51,7 +51,7 @@ func _run_cell(game, animal: bool) -> void:
 	_check(game.try_place("vacuole", Vector2i(60, 2)) == "outside_cell", tag + ": outside refused")
 	var vac = game.uid_at(Vector2i(-5, 2))
 	var mito = game.uid_at(Vector2i(-3, 0))
-	var anchor = game.uid_at(Vector2i(0, -10))
+	var anchor = game.uid_at(Vector2i(0, -7))
 	_check(game.sim.add_link(vac, mito), tag + ": energy link")
 	_check(game.sim.add_link(vac, anchor), tag + ": water link")
 	game._on_tick()
@@ -109,6 +109,27 @@ func _run_cell(game, animal: bool) -> void:
 	Input.action_release("click")
 	_check(game.sim.organelles[game.uid_at(Vector2i(0, 0))].health == 100.0, tag + ": repair tool restores health")
 	game.tool = ""
+	# open_buildings toggles the palette and stats; an attack pops the stats back up
+	var hud = null
+	for c in game.get_children():
+		if c.get_script() != null and c.get_script().get_global_name() == &"Hud":
+			hud = c
+	var palette = game.get_node("organell buttons and stuff")
+	var stats = hud.get_child(0)
+	_check(palette.visible and stats.visible, tag + ": panels visible at start")
+	hud._input(_action("open_buildings"))
+	_check(not palette.visible and not stats.visible, tag + ": open_buildings hides palette and stats")
+	game.director.bacteria_chance = 1.0
+	game.director._time_to_event = 0.0
+	game._on_tick()
+	_check(not game.director.timers.is_empty(), tag + ": a bacteria event started")
+	_check(stats.visible and not palette.visible, tag + ": attack pops the stats tab up, palette stays hidden")
+	for t in game.director.timers.duplicate():
+		game.sim.repair(t["uid"])
+	game._on_tick()
+	_check(game.director.timers.is_empty() and not stats.visible, tag + ": stats tab hides again once resolved")
+	hud._input(_action("open_buildings"))
+	_check(palette.visible and stats.visible, tag + ": open_buildings shows both again")
 	# plant-only organelles are refused for animals
 	if animal:
 		_check(game.try_place("chloroplast", Vector2i(5, 2)) in ["wrong_cell_type", "locked"], tag + ": chloroplast refused")
@@ -125,4 +146,11 @@ func _button(pressed: bool) -> InputEventMouseButton:
 	var ev := InputEventMouseButton.new()
 	ev.button_index = MOUSE_BUTTON_LEFT
 	ev.pressed = pressed
+	return ev
+
+
+func _action(name: String) -> InputEventAction:
+	var ev := InputEventAction.new()
+	ev.action = name
+	ev.pressed = true
 	return ev

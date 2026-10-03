@@ -1,13 +1,13 @@
 class_name DifficultyCurve extends Resource
 ## Every value that scales with survival time lives here, in seconds.
 
-@export var first_event_delay: float = 45.0
-@export var interval_start: float = 40.0
-@export var interval_floor: float = 12.0
-@export var interval_ramp_seconds: float = 600.0
+@export var first_event_delay: float = 90.0
+@export var interval_start: float = 90.0
+@export var interval_floor: float = 40.0
+@export var interval_ramp_seconds: float = 900.0
 @export var size_start: int = 1
-@export var size_max: int = 5
-@export var size_ramp_seconds: float = 900.0
+@export var size_max: int = 4
+@export var size_ramp_seconds: float = 1200.0
 @export var repair_start: float = 60.0
 @export var repair_floor: float = 20.0
 @export var repair_ramp_seconds: float = 600.0

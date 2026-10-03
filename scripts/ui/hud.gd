@@ -11,6 +11,9 @@ var _bars: Dictionary = {}
 var _time := Label.new()
 var _alerts := Label.new()
 var _tip := Label.new()
+var _palette: Control
+var _stats: PanelContainer
+var _panels_shown := true  # toggled by open_buildings; an attack overrides it for the stats tab
 
 
 func setup(game: CellGame) -> void:
@@ -20,6 +23,8 @@ func setup(game: CellGame) -> void:
 	panel.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	panel.theme = MetalUi.theme()
 	add_child(panel)
+	_stats = panel
+	_palette = game.get_node_or_null("organell buttons and stuff") as Control
 	var box := VBoxContainer.new()
 	panel.add_child(box)
 	box.add_child(_time)
@@ -50,6 +55,22 @@ func setup(game: CellGame) -> void:
 	game.run_started.connect(_refresh)
 
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("open_buildings"):
+		_panels_shown = not _panels_shown
+		_update_panels()
+		get_viewport().set_input_as_handled()
+
+
+## open_buildings shows/hides the buildings palette and the stats tab together.
+## The stats tab also pops up while any repair is pending, then hides again.
+func _update_panels() -> void:
+	if _palette != null:
+		_palette.visible = _panels_shown
+	var under_attack := _game.director != null and not _game.director.timers.is_empty()
+	_stats.visible = _panels_shown or under_attack
+
+
 func _refresh() -> void:
 	var sim := _game.sim
 	var caps := sim.capacities()
@@ -63,6 +84,7 @@ func _refresh() -> void:
 	for t in _game.director.timers:
 		lines.append("%s: %ds left" % [t["label"], ceili(t["remaining"])])
 	_alerts.text = "\n".join(lines)
+	_update_panels()
 
 
 func _process(_delta: float) -> void:

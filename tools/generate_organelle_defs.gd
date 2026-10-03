@@ -27,7 +27,7 @@ func _rows() -> Array[Dictionary]:
 			"id": "membrane", "display_name": "Membrane", "city_name": "City limits",
 			"function_text": "A semi-permeable layer that controls what enters and exits the cell. It collects water, and in animal cells it absorbs food.",
 			"city_text": "City limits control what enters and exits a city, just like a membrane controls what enters and exits a cell.",
-			"energy_use": 0.2, "water_output": 0.6, "food_output_animal": 0.25,
+			"energy_use": 0.2, "water_output": 0.6, "food_output_animal": 0.4,
 			"needs_energy_link": false, "needs_water_link": false,
 			"decay_per_second": 0.1, "repair_energy_cost": 0.5, "atlas_tile": Vector2i(2, 0),
 		},

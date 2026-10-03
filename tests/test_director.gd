@@ -32,15 +32,15 @@ func _director(s: CellSim, bacteria_chance: float) -> DamageDirector:
 
 func test_curve_values_ramp_and_clamp() -> void:
 	var c := DifficultyCurve.new()
-	_near(c.event_interval(0.0), 40.0)
-	_near(c.event_interval(600.0), 12.0)
-	_near(c.event_interval(99999.0), 12.0)
+	_near(c.event_interval(0.0), 90.0)
+	_near(c.event_interval(900.0), 40.0)
+	_near(c.event_interval(99999.0), 40.0)
+	_near(c.first_event_delay, 90.0)
 	_near(c.repair_window(0.0), 60.0)
 	_near(c.repair_window(600.0), 20.0)
 	_near(c.repair_window(99999.0), 20.0)
 	assert_eq(c.event_size(0.0), 1)
-	assert_eq(c.event_size(450.0), 3)
-	assert_eq(c.event_size(99999.0), 5)
+	assert_eq(c.event_size(99999.0), 4)
 	_near(c.decay_multiplier(0.0), 1.0)
 	_near(c.decay_multiplier(900.0), 2.0)
 

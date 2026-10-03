@@ -2,7 +2,8 @@ class_name StarterLayout extends RefCounted
 ## The pre-built cell a run starts with: a membrane ring (plus a wall ring for
 ## plants) and a pre-wired nucleus, chromosomes and mitochondria.
 
-const HALF := Vector2i(20, 10)
+## Half-size of the membrane ring in tiles (the cell is 2*HALF+1 tiles across).
+const HALF := Vector2i(12, 7)
 
 
 static func ring(half: Vector2i) -> Array[Vector2i]:

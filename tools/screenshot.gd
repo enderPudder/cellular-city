@@ -19,7 +19,7 @@ func _initialize() -> void:
 	game.try_place("vacuole", Vector2i(-6, 3))
 	var vac = game.uid_at(Vector2i(-6, 3))
 	game.sim.add_link(vac, game.uid_at(Vector2i(-3, 0)))
-	game.sim.add_link(vac, game.uid_at(Vector2i(0, -10)))
+	game.sim.add_link(vac, game.uid_at(Vector2i(0, -7)))
 	game._on_tick()
 	for c in game.get_children():
 		if c.get_script() != null and c.get_script().get_global_name() in ([&"StartScreen"] if OS.get_cmdline_user_args().has("dialogs") else [&"InfoCard", &"StartScreen"]):
