@@ -1,0 +1,72 @@
+class_name Hud extends CanvasLayer
+## Meters, survival timer, active repair timers, hover tooltip.
+
+const METER_COLORS := {
+	"food": Color("e8a33d"), "energy": Color("f2d64b"), "water": Color("4aa3e0"),
+	"waste": Color("8a6d3b"), "fat": Color("d9c7a0"),
+}
+
+var _game: CellGame
+var _bars: Dictionary = {}
+var _time := Label.new()
+var _alerts := Label.new()
+var _tip := Label.new()
+
+
+func setup(game: CellGame) -> void:
+	_game = game
+	var panel := PanelContainer.new()
+	panel.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, 8)
+	panel.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	add_child(panel)
+	var box := VBoxContainer.new()
+	panel.add_child(box)
+	box.add_child(_time)
+	for m in CellSim.METERS:
+		var row := HBoxContainer.new()
+		var name_label := Label.new()
+		name_label.text = m.capitalize()
+		name_label.custom_minimum_size.x = 60
+		var bar := ProgressBar.new()
+		bar.custom_minimum_size = Vector2(160, 16)
+		bar.show_percentage = false
+		bar.modulate = METER_COLORS[m]
+		row.add_child(name_label)
+		row.add_child(bar)
+		box.add_child(row)
+		_bars[m] = bar
+	box.add_child(_alerts)
+	var book := Button.new()
+	book.text = "Encyclopedia"
+	book.pressed.connect(func() -> void: get_tree().call_group("encyclopedia", "toggle"))
+	box.add_child(book)
+	_tip.add_theme_color_override("font_color", Color.WHITE)
+	_tip.add_theme_color_override("font_outline_color", Color.BLACK)
+	_tip.add_theme_constant_override("outline_size", 4)
+	add_child(_tip)
+	game.ticked.connect(_refresh)
+	game.run_started.connect(_refresh)
+
+
+func _refresh() -> void:
+	var sim := _game.sim
+	var caps := sim.capacities()
+	for m in CellSim.METERS:
+		var bar: ProgressBar = _bars[m]
+		bar.max_value = caps[m]
+		bar.value = sim.meters[m]
+	var seconds := int(sim.elapsed)
+	_time.text = "Survived %d:%02d" % [seconds / 60, seconds % 60]
+	var lines: Array[String] = []
+	for t in _game.director.timers:
+		lines.append("%s: %ds left" % [t["label"], ceili(t["remaining"])])
+	_alerts.text = "\n".join(lines)
+
+
+func _process(_delta: float) -> void:
+	if _game.sim == null or not _game.running:
+		_tip.text = ""
+		return
+	var uid := _game.uid_at(_game.cell_at_mouse())
+	_tip.text = _game.describe(uid) if uid != -1 else ""
+	_tip.position = get_viewport().get_mouse_position() + Vector2(14, 14)
