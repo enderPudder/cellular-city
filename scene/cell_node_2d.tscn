@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://daxmie2x1a0dn"]
+
+[ext_resource type="Texture2D" uid="uid://cayhexwia5cjm" path="res://assets/backround.png" id="1_m0kmp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tsq17"]
+atlas = ExtResource("1_m0kmp")
+region = Rect2(0, 0, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85nit"]
+atlas = ExtResource("1_m0kmp")
+region = Rect2(1155, 0, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amo6b"]
+atlas = ExtResource("1_m0kmp")
+region = Rect2(2310, 0, 1155, 650)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_se7w5"]
+atlas = ExtResource("1_m0kmp")
+region = Rect2(3465, 0, 1155, 650)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_j2r2i"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tsq17")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85nit")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amo6b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_se7w5")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 11.0
+}]
+
+[node name="cell Node2D" type="Node2D" unique_id=2001838377]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1646096353]
+sprite_frames = SubResource("SpriteFrames_j2r2i")
+autoplay = "default"
+frame_progress = 0.017881447
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=971296852]
