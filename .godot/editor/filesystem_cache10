@@ -1,6 +1,7 @@
-78098b89c88a74ebe8c20117b8754620
-::res://::1791073596
+9cad1ddce9e5a63143ba340c9520626b
+::res://::1791073909
 CLAUDE.md::TextFile::-1::1791073533::0::1::::<><><>0<>0<><>::
+export_presets.cfg::TextFile::-1::1791073899::0::1::::<><><>0<>0<><>::
 icon.svg::CompressedTexture2D::526128748838098003::1790990874::1790994501::1::::<><><>0<>0<>6631cce54029e1554c78cc12c8d7e9fc<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 ::res://addons/::1791046865
 ::res://addons/godot_ai/::1791046865
@@ -176,9 +177,9 @@ plant backround.png::CompressedTexture2D::371435193254483927::1791030453::179103
 veins backround.png::CompressedTexture2D::4822819837996037174::1790994929::1790994932::1::::<><><>0<>0<>296d9ee3ffbbd4a86d41108f29bda417<>res://.godot/imported/veins backround.png-dd9b58f9efe03a03bbaf368a3ead48e5.ctex::
 ::res://assets/raw assets/::1790991661
 ::res://assets/themes/::1780149681
-::res://assets/themes/custom/::1791066593
+::res://assets/themes/custom/::1791073675
 assets_alpha.png::CompressedTexture2D::2683123544156353481::1791065122::1791065122::1::::<><><>0<>0<>e16d99dd209598bb0f0a1e6b4c41ab49<>res://.godot/imported/assets_alpha.png-b4ffdaf2bed51dee83c9bcecedf68aeb.ctex::
-custom metal plate theme.tres::Theme::4062963967562062066::1791066593::0::1::::<><><>0<>0<><>::uid://d3v1njpto1rdi::::res://assets/themes/custom/TrueType/VCR_OSD_MONO_1.001.ttf<>uid://behywgugxv8sj::::res://assets/themes/custom/assets_alpha.png<>uid://7muku8wdp6ql::::res://assets/themes/custom/metal panel.png
+custom metal plate theme.tres::Theme::4062963967562062066::1791073675::0::1::::<><><>0<>0<><>::uid://d3v1njpto1rdi::::res://assets/themes/custom/TrueType/VCR_OSD_MONO_1.001.ttf<>uid://behywgugxv8sj::::res://assets/themes/custom/assets_alpha.png<>uid://7muku8wdp6ql::::res://assets/themes/custom/metal panel.png
 CustomBlue.tres::Theme::7588525408387176108::1791065122::0::1::::<><><>0<>0<><>::res://assets/themes/custom/TrueType/PixeloidMono.ttf<>uid://d3v1njpto1rdi::::res://assets/themes/custom/TrueType/VCR_OSD_MONO_1.001.ttf<>uid://behywgugxv8sj::::res://assets/themes/custom/assets_alpha.png
 down_arrow.png::CompressedTexture2D::6334772553602492913::1791065122::1791065122::1::::<><><>0<>0<>62a24a0495a54655243350a26d05b75c<>res://.godot/imported/down_arrow.png-8c0beee46caef49f77ae7c3833cb748a.ctex::
 metal panel.png::CompressedTexture2D::2272048829709894735::1791065122::1791065122::1::::<><><>0<>0<>cef340a897f83ccba6b5d8c811af081e<>res://.godot/imported/metal panel.png-ceb9925ec78ea8b5e9d8b89f55ae4a25.ctex::
@@ -205,8 +206,9 @@ vacuole.tres::Resource/OrganelleDef::-1::1791067504::0::1::::<><><>0<>0<><>::res
 ::res://docs/superpowers/specs/::1791065122
 2026-10-03-cellular-city-game-design.md::TextFile::-1::1791065122::0::1::::<><><>0<>0<><>::
 ::res://documents/::1791048497
-::res://scene/::1791066739
-cell Node2D.tscn::PackedScene::7207485882570023063::1791067561::0::1::::<><><>0<>0<><>::uid://xv2kdad6d4t::::res://scripts/game/cell_game.gd<>uid://fj6qo1g1jpdn::::res://assets/plant backround.png<>uid://cayhexwia5cjm::::res://assets/veins backround.png<>uid://lpn1tcl2eh16::::res://scripts/backround.gd<>uid://mhu2jm7ajg0y::::res://assets/organelle tilemap.png<>uid://d05uftku1o2bp::::res://scripts/organelle scripts/membrane.gd<>uid://bx5eom6g8vleg::::res://assets/themes/custom/custom metal plate theme.tres<>uid://cbanelrj6g2kk::::res://scripts/TileBase.gd
+::res://HTML5/::1791073876
+::res://scene/::1791073686
+cell Node2D.tscn::PackedScene::7207485882570023063::1791073686::0::1::::<><><>0<>0<><>::uid://xv2kdad6d4t::::res://scripts/game/cell_game.gd<>uid://fj6qo1g1jpdn::::res://assets/plant backround.png<>uid://cayhexwia5cjm::::res://assets/veins backround.png<>uid://lpn1tcl2eh16::::res://scripts/backround.gd<>uid://mhu2jm7ajg0y::::res://assets/organelle tilemap.png<>uid://d05uftku1o2bp::::res://scripts/organelle scripts/membrane.gd<>uid://bx5eom6g8vleg::::res://assets/themes/custom/custom metal plate theme.tres<>uid://cbanelrj6g2kk::::res://scripts/TileBase.gd
 membrane truck.tscn::PackedScene::1689643737630841554::1791061066::0::1::::<><><>0<>0<><>::uid://mhu2jm7ajg0y::::res://assets/organelle tilemap.png
 vesicle train.tscn::PackedScene::6293758847137165154::1791037617::0::1::::<><><>0<>0<><>::uid://mhu2jm7ajg0y::::res://assets/organelle tilemap.png
 ::res://scripts/::1791065122
@@ -232,7 +234,7 @@ shipment.gd::GDScript::8662275074059236116::1791068772::0::1::::Shipment<>RefCou
 sim_link.gd::GDScript::6173345331407171884::1791068772::0::1::::SimLink<>RefCounted<><>0<>0<><>::
 starter_layout.gd::GDScript::6154871238782337688::1791068772::0::1::::StarterLayout<>RefCounted<><>0<>0<><>::
 vesicle_path.gd::GDScript::7831004468001251908::1791068772::0::1::::VesiclePath<>RefCounted<><>0<>0<><>::
-::res://scripts/ui/::1791073533
+::res://scripts/ui/::1791073686
 build_menu.gd::GDScript::1189603542782776356::1791073533::0::1::::BuildMenu<>CanvasLayer<><>0<>0<><>::
 encyclopedia.gd::GDScript::5542519061257768660::1791073533::0::1::::Encyclopedia<>CanvasLayer<><>0<>0<><>::
 game_over.gd::GDScript::1521143308026910793::1791073533::0::1::::GameOver<>CanvasLayer<><>0<>0<><>::
@@ -243,7 +245,7 @@ organelle_tip.gd::GDScript::3303262984718385758::1791068772::0::1::::OrganelleTi
 speed_controls.gd::GDScript::2346417920925719488::1791073533::0::1::::SpeedControls<>CanvasLayer<><>0<>0<><>::
 start_screen.gd::GDScript::923422494711611012::1791073533::0::1::::StartScreen<>CanvasLayer<><>0<>0<><>::
 ui_root.gd::GDScript::5103904333555215849::1791073512::0::1::::UiRoot<>Control<><>0<>0<><>::
-ui_scale.gd::GDScript::2582731605271308586::1791073512::0::1::::UiScale<>RefCounted<><>0<>0<><>::
+ui_scale.gd::GDScript::2582731605271308586::1791073686::0::1::::UiScale<>RefCounted<><>0<>0<><>::
 ::res://tests/::1791068426
 defs_factory.gd::GDScript::4703993371586549779::1791065122::0::1::::DefsFactory<>RefCounted<><>0<>0<><>::
 test_catalog.gd::GDScript::6160079950822017740::1791067436::0::1::::<>McpTestSuite<><>0<>0<><>::

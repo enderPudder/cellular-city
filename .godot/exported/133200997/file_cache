@@ -1,0 +1,16 @@
+res://assets/themes/custom/custom metal plate theme.tres::c581271ffd6a26eb66455cba2364131b::1791073675::res://.godot/exported/133200997/export-6f1e6d03f8d8c0c681927e3835ee6444-custom metal plate theme.res
+res://assets/themes/custom/CustomBlue.tres::a42e11a4559bd9ceddb38d74e9e74246::1791065122::res://.godot/exported/133200997/export-2b46b8bb712d862683ea063fa0a321e1-CustomBlue.res
+res://data/organelles/cell_wall.tres::d5dcf30acbef058d2d332bbedc31b7a8::1791067504::res://.godot/exported/133200997/export-04be71a29935c6631c113885535d3b0c-cell_wall.res
+res://data/organelles/chloroplast.tres::d5d5e7cd18509dc6a7fd5b8b2e629963::1791067504::res://.godot/exported/133200997/export-54850982dcfa5f6c208bdb622bbb38d3-chloroplast.res
+res://data/organelles/chromosomes.tres::33b0c724b91f735fe381f85a873062bb::1791067504::res://.godot/exported/133200997/export-a582cde39e96bbc88bebfe135050b421-chromosomes.res
+res://data/organelles/cytoplasm.tres::681304718d3c8ff87617731d6b5d98b4::1791067504::res://.godot/exported/133200997/export-b9c78c84f4af64667484230298946bb9-cytoplasm.res
+res://data/organelles/endoplasmic_reticulum.tres::49cd8b5430fc68fd13f521bb6a4f2ca2::1791067504::res://.godot/exported/133200997/export-e1c86239f420de4ea39db902a7744fc0-endoplasmic_reticulum.res
+res://data/organelles/golgi_apparatus.tres::189c4d2fed6ca9483d41b4f42514ccce::1791067504::res://.godot/exported/133200997/export-080cf64e1ad014d1bd0b092d5427cc90-golgi_apparatus.res
+res://data/organelles/lysosome.tres::ffa468d007bd8c892a7e91d07e257c8e::1791067504::res://.godot/exported/133200997/export-d1a5474c79fb840b44c6f33024ce2a83-lysosome.res
+res://data/organelles/membrane.tres::bccfefcac7aee26fc2ac0260df1ef2da::1791067504::res://.godot/exported/133200997/export-c257a2209f919dc86492b85f3bd38e31-membrane.res
+res://data/organelles/mitochondria.tres::f052d615ccd81f327e92b8a04dd3ed9a::1791067504::res://.godot/exported/133200997/export-5eff905ecdcfb70403fc2d3bc223da72-mitochondria.res
+res://data/organelles/nucleus.tres::46073c6e93b22ff7447bc3eb8ac21029::1791067504::res://.godot/exported/133200997/export-bdb8d689d26753b2bb366a3081a44a46-nucleus.res
+res://data/organelles/vacuole.tres::4e06ebd22d27baa28701d6b9ee911e7c::1791067504::res://.godot/exported/133200997/export-2c44944ea20ca175658d59637e3cfd6a-vacuole.res
+res://scene/cell Node2D.tscn::09c4f5636945c0db364e1ef558ff546f::1791073686::res://.godot/exported/133200997/export-13cb4766004244a33b0466929f051dc5-cell Node2D.scn
+res://scene/membrane truck.tscn::650d5a42d986b011abf3c9b0144a8ac2::1791061066::res://.godot/exported/133200997/export-8c7cb34b1ecbc15b0c33470d378a86b8-membrane truck.scn
+res://scene/vesicle train.tscn::d346f32f8271277abd7505db80dc72cf::1791037617::res://.godot/exported/133200997/export-0c0140152f5b16d27360e18565e7873c-vesicle train.scn
