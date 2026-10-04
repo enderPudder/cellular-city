@@ -146,3 +146,20 @@ func test_water_capacity_includes_bonus_from_alive_organelles() -> void:
 	assert_eq(s.capacities()["water"], 200.0)
 	s.add_organelle("tank", Vector2i.ZERO)
 	assert_eq(s.capacities()["water"], 240.0)
+
+
+func test_links_changed_fires_on_add_and_remove() -> void:
+	var s := _sim()
+	var plain := s.add_organelle("plain", Vector2i(0, 0))
+	var mito := s.add_organelle("mito", Vector2i(1, 0))
+	var count := [0]
+	s.links_changed.connect(func() -> void: count[0] += 1)
+	assert_true(s.add_link(plain, mito))
+	assert_eq(count[0], 1)
+	assert_false(s.add_link(plain, mito))
+	assert_eq(count[0], 1, "a refused duplicate must not fire")
+	s.remove_link(plain, mito, SimLink.Type.ENERGY)
+	assert_eq(count[0], 2)
+	s.add_link(plain, mito)
+	s.remove_links_of(plain)
+	assert_eq(count[0], 4)
