@@ -5,11 +5,11 @@ class_name BuildInput extends Node
 ## Override to supply the cell under the pointer (used by the smoke test).
 var mouse_cell: Callable = Callable()
 
-var _game: CellGame
+var _game  # the CellGame node, untyped on purpose so helpers don't form a compile cycle with it
 var _drag_uid: int = -1
 
 
-func setup(game: CellGame) -> void:
+func setup(game) -> void:
 	_game = game
 
 
@@ -49,7 +49,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		_game.link_drag_from = _drag_uid
 	else:
 		if _drag_uid != -1:
-			var target := _game.uid_at(_cell())
+			var target: int = _game.uid_at(_cell())
 			if target != -1:
 				_game.sim.add_link(_drag_uid, target)
 		_drag_uid = -1

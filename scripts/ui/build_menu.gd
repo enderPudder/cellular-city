@@ -26,7 +26,7 @@ const TOOL_TIPS := {
 const TIP_WIDTH := 250.0
 const TIP_FONT_SIZE := 12
 
-var _game: CellGame
+var _game  # the CellGame node, untyped on purpose so helpers don't form a compile cycle with it
 var _group := ButtonGroup.new()
 var _buttons: Dictionary = {}  # tool id -> Button
 var _base_text: Dictionary = {}  # tool id -> original button text
@@ -35,11 +35,11 @@ var _tip_panel := PanelContainer.new()
 var _tip_label := RichTextLabel.new()
 
 
-func setup(game: CellGame) -> void:
+func setup(game) -> void:
 	_game = game
 	_group.allow_unpress = true
 	_setup_tip_panel()
-	var palette := game.get_node_or_null(PALETTE_PATH)
+	var palette: Node = game.get_node_or_null(PALETTE_PATH)
 	if palette != null:
 		for node_name in BUTTON_IDS:
 			var b := palette.get_node_or_null(node_name) as Button
@@ -140,7 +140,7 @@ func _on_run_started() -> void:
 
 
 func _refresh() -> void:
-	var sim := _game.sim
+	var sim: CellSim = _game.sim
 	for id in _buttons:
 		if not sim.defs.has(id):
 			continue

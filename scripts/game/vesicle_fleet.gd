@@ -9,10 +9,10 @@ const SPEED_TILES_PER_SECOND := 4.0
 ## Each train: {node: Node2D, cells: Array[Vector2i], progress: float, shipment: Shipment, laid: int}
 var trains: Array[Dictionary] = []
 
-var _game: CellGame
+var _game  # the CellGame node, untyped on purpose so helpers don't form a compile cycle with it
 
 
-func setup(game: CellGame) -> void:
+func setup(game) -> void:
 	_game = game
 	z_index = 9
 	game.run_started.connect(_on_run_started)
@@ -58,8 +58,8 @@ func step(dt: float) -> void:
 			trains.erase(t)
 			continue
 		var i := int(float(t["progress"]))
-		var a := _game.cell_center(cells[i])
-		var b := _game.cell_center(cells[i + 1])
+		var a: Vector2 = _game.cell_center(cells[i])
+		var b: Vector2 = _game.cell_center(cells[i + 1])
 		node.position = a.lerp(b, float(t["progress"]) - i)
 		var sprite := node.get_node_or_null("AnimatedSprite2D") as AnimatedSprite2D
 		if sprite != null:
@@ -74,6 +74,6 @@ func _lay_track(t: Dictionary) -> void:
 	if i == int(t["laid"]):
 		return
 	t["laid"] = i
-	var layer := _game.layer_for("vesicles")
+	var layer: TileBase = _game.layer_for("vesicles")
 	if layer != null and _game.sim.organelle_at(cells[i]) == -1:
 		layer.show_tile(cells[i])

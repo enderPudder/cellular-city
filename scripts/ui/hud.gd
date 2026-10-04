@@ -6,7 +6,7 @@ const METER_COLORS := {
 	"waste": Color("8a6d3b"), "fat": Color("d9c7a0"),
 }
 
-var _game: CellGame
+var _game  # the CellGame node, untyped on purpose so helpers don't form a compile cycle with it
 var _bars: Dictionary = {}
 var _time := Label.new()
 var _alerts := Label.new()
@@ -16,7 +16,7 @@ var _stats: PanelContainer
 var _panels_shown := true  # toggled by open_buildings; an attack overrides it for the stats tab
 
 
-func setup(game: CellGame) -> void:
+func setup(game) -> void:
 	_game = game
 	var panel := PanelContainer.new()
 	panel.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, 8)
@@ -67,12 +67,12 @@ func _input(event: InputEvent) -> void:
 func _update_panels() -> void:
 	if _palette != null:
 		_palette.visible = _panels_shown
-	var under_attack := _game.director != null and not _game.director.timers.is_empty()
+	var under_attack: bool = _game.director != null and not _game.director.timers.is_empty()
 	_stats.visible = _panels_shown or under_attack
 
 
 func _refresh() -> void:
-	var sim := _game.sim
+	var sim: CellSim = _game.sim
 	var caps := sim.capacities()
 	for m in CellSim.METERS:
 		var bar: ProgressBar = _bars[m]
@@ -91,6 +91,6 @@ func _process(_delta: float) -> void:
 	if _game.sim == null or not _game.running:
 		_tip.text = ""
 		return
-	var uid := _game.uid_at(_game.cell_at_mouse())
+	var uid: int = _game.uid_at(_game.cell_at_mouse())
 	_tip.text = _game.describe(uid) if uid != -1 else ""
 	_tip.position = get_viewport().get_mouse_position() + Vector2(14, 14)

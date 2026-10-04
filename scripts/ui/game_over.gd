@@ -7,7 +7,7 @@ const REASONS := {
 }
 
 
-func setup(game: CellGame) -> void:
+func setup(game) -> void:
 	layer = 20
 	visible = false
 	var panel := PanelContainer.new()

@@ -2,11 +2,11 @@ class_name Encyclopedia extends CanvasLayer
 ## Lists unlocked organelles with their city analogies; locked ones show only
 ## their unlock requirement. Toggled from the HUD button.
 
-var _game: CellGame
+var _game  # the CellGame node, untyped on purpose so helpers don't form a compile cycle with it
 var _list := VBoxContainer.new()
 
 
-func setup(game: CellGame) -> void:
+func setup(game) -> void:
 	_game = game
 	layer = 12
 	visible = false
@@ -43,7 +43,7 @@ func toggle() -> void:
 func _rebuild() -> void:
 	for c in _list.get_children():
 		c.queue_free()
-	var sim := _game.sim
+	var sim: CellSim = _game.sim
 	var defs: Array = sim.defs.values()
 	defs.sort_custom(func(a: OrganelleDef, b: OrganelleDef) -> bool: return a.display_name < b.display_name)
 	for d: OrganelleDef in defs:

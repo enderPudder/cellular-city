@@ -8,12 +8,12 @@ const TIPS := {
 	GameSpeed.DOUBLE: "Double speed",
 }
 
-var _game: CellGame
+var _game  # the CellGame node, untyped on purpose so helpers don't form a compile cycle with it
 var _buttons: Dictionary = {}  # speed -> Button
 var _group := ButtonGroup.new()
 
 
-func setup(game: CellGame) -> void:
+func setup(game) -> void:
 	_game = game
 	layer = 6
 	var bar := PanelContainer.new()

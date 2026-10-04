@@ -2,7 +2,7 @@ class_name StartScreen extends CanvasLayer
 ## Pick animal or plant to begin a run.
 
 
-func setup(game: CellGame) -> void:
+func setup(game) -> void:
 	layer = 20
 	var panel := PanelContainer.new()
 	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)

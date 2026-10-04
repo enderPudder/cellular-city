@@ -10,10 +10,10 @@ const COLORS := {
 }
 const FLOW_SPEED := 0.6
 
-var _game: CellGame
+var _game  # the CellGame node, untyped on purpose so helpers don't form a compile cycle with it
 
 
-func setup(game: CellGame) -> void:
+func setup(game) -> void:
 	_game = game
 	z_index = 10
 
@@ -25,7 +25,7 @@ func _process(_delta: float) -> void:
 func _draw() -> void:
 	if _game == null or _game.sim == null:
 		return
-	var sim := _game.sim
+	var sim: CellSim = _game.sim
 	var phase := Time.get_ticks_msec() / 1000.0 * FLOW_SPEED
 	for i in sim.links.size():
 		var l := sim.links[i]
@@ -33,8 +33,8 @@ func _draw() -> void:
 		var supplier: PlacedOrganelle = sim.organelles.get(l.to_uid)
 		if consumer == null or supplier == null:
 			continue
-		var a := _game.cell_center(consumer.cell)
-		var b := _game.cell_center(supplier.cell)
+		var a: Vector2 = _game.cell_center(consumer.cell)
+		var b: Vector2 = _game.cell_center(supplier.cell)
 		var color: Color = COLORS[l.type]
 		var live := supplier.alive()
 		draw_line(a, b, color if live else color.darkened(0.6), 1.0)
@@ -51,8 +51,8 @@ func _draw() -> void:
 	if _game.tool == "repair" and _game.running and not _game.paused \
 			and get_viewport().gui_get_hovered_control() == null:
 		var mouse := get_global_mouse_position()
-		draw_circle(mouse, CellGame.REPAIR_RADIUS, Color(0.3, 1.0, 0.5, 0.12))
-		draw_arc(mouse, CellGame.REPAIR_RADIUS, 0.0, TAU, 48, Color(0.3, 1.0, 0.5, 0.9), 1.5)
+		draw_circle(mouse, _game.REPAIR_RADIUS, Color(0.3, 1.0, 0.5, 0.12))
+		draw_arc(mouse, _game.REPAIR_RADIUS, 0.0, TAU, 48, Color(0.3, 1.0, 0.5, 0.9), 1.5)
 	if _game.link_drag_from != -1 and sim.organelles.has(_game.link_drag_from):
-		var start := _game.cell_center((sim.organelles[_game.link_drag_from] as PlacedOrganelle).cell)
+		var start: Vector2 = _game.cell_center((sim.organelles[_game.link_drag_from] as PlacedOrganelle).cell)
 		draw_line(start, get_global_mouse_position(), Color.WHITE, 1.0)

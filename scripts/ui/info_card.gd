@@ -1,13 +1,13 @@
 class_name InfoCard extends CanvasLayer
 ## Pops up when an organelle unlocks and pauses the sim until dismissed.
 
-var _game: CellGame
+var _game  # the CellGame node, untyped on purpose so helpers don't form a compile cycle with it
 var _queue: Array[String] = []
 var _title := Label.new()
 var _body := RichTextLabel.new()
 
 
-func setup(game: CellGame) -> void:
+func setup(game) -> void:
 	_game = game
 	layer = 15
 	visible = false
