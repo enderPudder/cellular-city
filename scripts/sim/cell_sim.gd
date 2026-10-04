@@ -7,6 +7,7 @@ signal organelle_added(uid: int)
 signal organelle_removed(uid: int, cell: Vector2i, def_id: String)
 signal shipment_dispatched(shipment: Shipment)
 signal shipment_delivered(shipment: Shipment)
+signal links_changed
 
 const METERS: Array[String] = ["food", "energy", "water", "waste", "fat"]
 const BASE_CAPS := {"food": 200.0, "energy": 500.0, "water": 200.0, "waste": 200.0, "fat": 100.0}
@@ -190,6 +191,7 @@ func add_link(from_uid: int, to_uid: int) -> bool:
 	if t == -1 or has_link(from_uid, to_uid, t):
 		return false
 	links.append(SimLink.make(from_uid, to_uid, t))
+	links_changed.emit()
 	return true
 
 
@@ -203,11 +205,13 @@ func has_link(from_uid: int, to_uid: int, type: int) -> bool:
 func remove_link(from_uid: int, to_uid: int, type: int) -> void:
 	links.assign(links.filter(func(l: SimLink) -> bool:
 		return not (l.from_uid == from_uid and l.to_uid == to_uid and l.type == type)))
+	links_changed.emit()
 
 
 func remove_links_of(uid: int) -> void:
 	links.assign(links.filter(func(l: SimLink) -> bool:
 		return l.from_uid != uid and l.to_uid != uid))
+	links_changed.emit()
 
 
 # ----- tick -----

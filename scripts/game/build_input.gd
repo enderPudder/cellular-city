@@ -23,7 +23,7 @@ func _world_pos() -> Vector2:
 
 
 func _blocked() -> bool:
-	return not _game.running or _game.paused or _game.get_viewport().gui_get_hovered_control() != null
+	return not _game.running or _game.paused or _game.intro_playing or _game.get_viewport().gui_get_hovered_control() != null
 
 
 func _process(_delta: float) -> void:
@@ -40,7 +40,7 @@ func _process(_delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not _game.running or _game.paused or _game.tool != "link":
+	if not _game.running or _game.paused or _game.intro_playing or _game.tool != "link":
 		return
 	if not (event is InputEventMouseButton) or (event as InputEventMouseButton).button_index != MOUSE_BUTTON_LEFT:
 		return
