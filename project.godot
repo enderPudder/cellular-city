@@ -25,6 +25,7 @@ _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 window/size/mode=1
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/stretch/scale=2.0
 
 [editor_plugins]
 
