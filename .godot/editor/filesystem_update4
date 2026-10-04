@@ -1,0 +1,8 @@
+res://CLAUDE.md
+res://scripts/game/build_input.gd
+res://scripts/game/cell_game.gd
+res://scripts/sim/cell_sim.gd
+res://scripts/sim/starter_layout.gd
+res://scripts/ui/hud.gd
+res://scripts/sim/setup_guide.gd
+res://tests/test_setup_guide.gd
