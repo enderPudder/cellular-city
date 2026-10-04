@@ -1,7 +1,7 @@
 9cad1ddce9e5a63143ba340c9520626b
-::res://::1791073909
+::res://::1791075758
 CLAUDE.md::TextFile::-1::1791073533::0::1::::<><><>0<>0<><>::
-export_presets.cfg::TextFile::-1::1791073899::0::1::::<><><>0<>0<><>::
+export_presets.cfg::TextFile::-1::1791073960::0::1::::<><><>0<>0<><>::
 icon.svg::CompressedTexture2D::526128748838098003::1790990874::1790994501::1::::<><><>0<>0<>6631cce54029e1554c78cc12c8d7e9fc<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 ::res://addons/::1791046865
 ::res://addons/godot_ai/::1791046865
@@ -199,14 +199,16 @@ membrane.tres::Resource/OrganelleDef::-1::1791067504::0::1::::<><><>0<>0<><>::re
 mitochondria.tres::Resource/OrganelleDef::-1::1791067504::0::1::::<><><>0<>0<><>::res://scripts/sim/organelle_def.gd
 nucleus.tres::Resource/OrganelleDef::-1::1791067504::0::1::::<><><>0<>0<><>::res://scripts/sim/organelle_def.gd
 vacuole.tres::Resource/OrganelleDef::-1::1791067504::0::1::::<><><>0<>0<><>::res://scripts/sim/organelle_def.gd
-::res://docs/::1791065122
+::res://docs/::1791075754
+index.apple-touch-icon.png::CompressedTexture2D::5273812491861488661::1791073996::1791075944::1::::<><><>0<>0<>743116c5c8f1020e48a728bf01a014e2<>res://.godot/imported/index.apple-touch-icon.png-b21a756d869f84af832970a74d8371bc.ctex::
+index.icon.png::CompressedTexture2D::3304180253157533343::1791073996::1791075944::1::::<><><>0<>0<>f323a1c6d303bee7bb35d0538bc4ef11<>res://.godot/imported/index.icon.png-b92c9a802ad4b78e247784454a6b506f.ctex::
+index.png::CompressedTexture2D::2826248742651091431::1791073996::1791075944::1::::<><><>0<>0<>a253af6dcd16fd715e238cb6e9bae853<>res://.godot/imported/index.png-0c78d14d192abe5f22f8c25928ca1ab8.ctex::
 ::res://docs/superpowers/::1791065122
 ::res://docs/superpowers/plans/::1791065122
 2026-10-03-cellular-city-v1.md::TextFile::-1::1791065122::0::1::::<><><>0<>0<><>::
 ::res://docs/superpowers/specs/::1791065122
 2026-10-03-cellular-city-game-design.md::TextFile::-1::1791065122::0::1::::<><><>0<>0<><>::
 ::res://documents/::1791048497
-::res://HTML5/::1791073876
 ::res://scene/::1791073686
 cell Node2D.tscn::PackedScene::7207485882570023063::1791073686::0::1::::<><><>0<>0<><>::uid://xv2kdad6d4t::::res://scripts/game/cell_game.gd<>uid://fj6qo1g1jpdn::::res://assets/plant backround.png<>uid://cayhexwia5cjm::::res://assets/veins backround.png<>uid://lpn1tcl2eh16::::res://scripts/backround.gd<>uid://mhu2jm7ajg0y::::res://assets/organelle tilemap.png<>uid://d05uftku1o2bp::::res://scripts/organelle scripts/membrane.gd<>uid://bx5eom6g8vleg::::res://assets/themes/custom/custom metal plate theme.tres<>uid://cbanelrj6g2kk::::res://scripts/TileBase.gd
 membrane truck.tscn::PackedScene::1689643737630841554::1791061066::0::1::::<><><>0<>0<><>::uid://mhu2jm7ajg0y::::res://assets/organelle tilemap.png
