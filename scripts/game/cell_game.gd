@@ -66,7 +66,7 @@ func _build_children() -> void:
 	var fleet := VesicleFleet.new()
 	fleet.setup(self)
 	add_child(fleet)
-	for ui in [SpeedControls.new(), Hud.new(), BuildMenu.new(), InfoCard.new(), Encyclopedia.new(), GameOver.new(), StartScreen.new()]:
+	for ui in [SpeedControls.new(), Hud.new(), GuideHud.new(), BuildMenu.new(), InfoCard.new(), Encyclopedia.new(), GameOver.new(), StartScreen.new()]:
 		add_child(ui)
 		ui.setup(self)
 

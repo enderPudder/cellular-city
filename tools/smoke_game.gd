@@ -38,6 +38,8 @@ func _run_cell(game, animal: bool) -> void:
 	_check(game._timer.is_stopped(), tag + ": clock stopped during the intro")
 	_check(_tiles(game, "membrane") < 76, tag + ": membrane is still popping in, got %d" % _tiles(game, "membrane"))
 	_check(game.try_place("nucleus", Vector2i(0, 0)) == "intro", tag + ": building is blocked during the intro")
+	var early_gh = _find(game, &"GuideHud")
+	_check(early_gh != null and not early_gh._panel.visible, tag + ": checklist hidden until the intro finishes")
 	game.skip_intro()
 	_check(not game.intro_playing, tag + ": intro over after skip")
 	_check(_tiles(game, "membrane") == 76, tag + ": membrane tiles mirrored, got %d" % _tiles(game, "membrane"))
@@ -266,6 +268,13 @@ func _setup_core(game, animal: bool, tag: String) -> void:
 	var energy_before: float = game.sim.meters["energy"]
 	var done_count := [0]
 	game.setup_done.connect(func() -> void: done_count[0] += 1)
+	var gh = _find(game, &"GuideHud")
+	_check(gh != null, tag + ": guide HUD exists")
+	if gh == null:
+		return
+	_check(gh._panel.visible and not gh._chip.visible, tag + ": checklist shows once the intro is over")
+	_check(gh._rows.size() == (3 if animal else 4), tag + ": one row per step, got %d" % gh._rows.size())
+	_check((gh._rows["nucleus"] as Label).text.begins_with("[ ]"), tag + ": first step starts unticked")
 	_check(game.guide != null and not game.guide.core_done, tag + ": a fresh guide at the start of every run")
 	_check(game.try_place("nucleus", Vector2i(0, 0)) == "", tag + ": nucleus placed")
 	_check(game.try_place("chromosomes", Vector2i(1, 0)) == "", tag + ": chromosomes placed")
@@ -275,6 +284,8 @@ func _setup_core(game, animal: bool, tag: String) -> void:
 	var mito: int = game.uid_at(Vector2i(-3, 0))
 	var anchor: int = game.uid_at(Vector2i(0, -7))
 	_check(game.guide.current_step()["id"] == "power", tag + ": guide moves on to the power step")
+	_check((gh._rows["nucleus"] as Label).text.begins_with("[x]"), tag + ": first step ticks off")
+	_check(gh._hint.text.contains("Mitochondria"), tag + ": hint moves to the next step")
 	_check(game._timer.is_stopped(), tag + ": clock still stopped mid-guide")
 	game.sim.add_link(mito, anchor)
 	game.sim.add_link(nucleus, mito)
@@ -289,6 +300,12 @@ func _setup_core(game, animal: bool, tag: String) -> void:
 	_check(done_count[0] == 1, tag + ": setup_done fired once, got %d" % done_count[0])
 	_check(not game._timer.is_stopped(), tag + ": the clock starts once the core is set up")
 	_check(game.sim.meters["energy"] == energy_before, tag + ": setting up the core cost no energy")
+	_check(gh._chip.visible and not gh._panel.visible, tag + ": checklist collapses to the Basics done chip")
+	var hud = _find(game, &"Hud")
+	hud._input(_action("open_buildings"))
+	_check(not gh._chip.visible and not gh._panel.visible, tag + ": Tab hides the chip too")
+	hud._input(_action("open_buildings"))
+	_check(gh._chip.visible, tag + ": Tab shows the chip again")
 
 
 func _button(pressed: bool) -> InputEventMouseButton:
