@@ -104,7 +104,7 @@ func _nucleus_pairs() -> Array:
 
 
 ## Does `uid` have a link of `type` to something that can supply it (a water
-## source for WATER, an energy source for ENERGY)?
+## source for WATER, an energy source that has water itself for ENERGY)?
 func _has_supply(uid: int, type: int) -> bool:
 	for l: SimLink in _sim.links:
 		if l.from_uid != uid or l.type != type:
@@ -114,6 +114,7 @@ func _has_supply(uid: int, type: int) -> bool:
 			continue
 		if type == SimLink.Type.WATER and src.def.water_output > 0.0:
 			return true
-		if type == SimLink.Type.ENERGY and src.def.max_load > 0.0:
+		# An energy source only supplies while it has water itself (see CellSim._resolve_supply).
+		if type == SimLink.Type.ENERGY and src.def.max_load > 0.0 and _has_supply(src.uid, SimLink.Type.WATER):
 			return true
 	return false

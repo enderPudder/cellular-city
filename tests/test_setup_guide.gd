@@ -171,3 +171,34 @@ func test_the_old_prebuilt_cell_satisfies_every_step() -> void:
 		var s := _shell(ct)
 		StarterLayout.build_core(s)
 		assert_true(SetupGuide.new(s).all_done(), "cell type %d" % ct)
+
+
+func test_energy_must_come_from_a_mitochondria_that_has_water() -> void:
+	var pair := _guided(ANIMAL)
+	var s: CellSim = pair[0]
+	var g: SetupGuide = pair[1]
+	var core := _place_core(s)
+	var dry := s.add_organelle("mitochondria", Vector2i(3, 2))
+	s.add_link(core["mito"], core["anchor"])
+	s.add_link(core["nucleus"], dry)
+	s.add_link(core["nucleus"], core["anchor"])
+	s.add_link(core["chromosomes"], core["anchor"])
+	assert_true(g.step_done("power"))
+	assert_false(g.step_done("wire"), "a dry mitochondria supplies no energy")
+	assert_false(g.all_done())
+	s.add_link(dry, core["anchor"])
+	assert_true(g.step_done("wire"))
+
+
+func test_chloroplast_energy_must_come_from_a_mitochondria_that_has_water() -> void:
+	var pair := _guided(PLANT)
+	var s: CellSim = pair[0]
+	var g: SetupGuide = pair[1]
+	var core := _place_core(s)
+	var dry := s.add_organelle("mitochondria", Vector2i(3, 2))
+	var chloroplast := s.add_organelle("chloroplast", Vector2i(3, 0))
+	s.add_link(chloroplast, dry)
+	s.add_link(chloroplast, core["anchor"])
+	assert_false(g.step_done("chloroplast"))
+	s.add_link(dry, core["anchor"])
+	assert_true(g.step_done("chloroplast"))
