@@ -11,6 +11,21 @@ func _initialize() -> void:
 	root.add_child(game)
 	await process_frame
 	game.start_run(animal)
+	var mode := OS.get_cmdline_user_args()
+	if mode.has("reveal"):
+		for i in 40:
+			await process_frame
+		root.get_viewport().get_texture().get_image().save_png(out)
+		quit()
+		return
+	game.skip_intro()
+	if mode.has("guide"):
+		for i in 20:
+			await process_frame
+		root.get_viewport().get_texture().get_image().save_png(out)
+		quit()
+		return
+	StarterLayout.build_core(game.sim)
 	for i in 12:
 		game._on_tick()
 	game.sim.meters["water"] = 200.0

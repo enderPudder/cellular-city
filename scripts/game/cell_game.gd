@@ -8,10 +8,16 @@ signal run_lost(reason: String)
 signal sim_unlocked(def_id: String)
 signal event_fired(label: String)
 signal speed_changed(speed: int)
+signal intro_finished
+signal guide_changed
+signal setup_done
+signal panels_toggled(shown: bool)
 
 const TICK_SECONDS := 1.0
 ## Radius in pixels of the repair brush (tiles are 16 px, so 3 tiles).
 const REPAIR_RADIUS := 48.0
+## Seconds a freshly revealed membrane/wall tile flashes while it pops in.
+const POP_SECONDS := 0.2
 
 var sim: CellSim
 var director: DamageDirector
@@ -23,10 +29,15 @@ var link_drag_from: int = -1
 ## GameSpeed.PAUSED / NORMAL / DOUBLE, chosen with the speed buttons. `paused` below is
 ## separate: it is set while an unlock card is open and also blocks building.
 var speed: int = GameSpeed.NORMAL
+## The basic-setup checklist for this run; the tick timer starts when it first completes.
+var guide: SetupGuide
+## True while the membrane and wall tiles are popping in; building is blocked.
+var intro_playing: bool = false
 
 var _layers: Dictionary = {}  # organelle id -> TileBase
 var _grid: TileBase
 var _timer := Timer.new()
+var _reveal: IntroReveal
 
 
 func _ready() -> void:
@@ -38,6 +49,11 @@ func _ready() -> void:
 	_timer.timeout.connect(_on_tick)
 	add_child(_timer)
 	_build_children()
+
+
+func _process(delta: float) -> void:
+	if intro_playing and _reveal != null:
+		_reveal.advance(delta)
 
 
 func _build_children() -> void:
@@ -58,25 +74,78 @@ func _build_children() -> void:
 func start_run(is_animal: bool) -> void:
 	Globals.player_plant_or_animal = is_animal
 	($backround as AnimatedSprite2D).call("refresh")
+	_timer.stop()
 	for layer: TileBase in _layers.values():
 		layer.clear()
 	var cell_type := OrganelleDef.CellType.ANIMAL if is_animal else OrganelleDef.CellType.PLANT
 	sim = CellSim.new(OrganelleCatalog.load_all(), cell_type)
-	sim.organelle_added.connect(_on_added)
 	sim.organelle_removed.connect(_on_removed)
 	sim.unlocked.connect(func(id: String) -> void: sim_unlocked.emit(id))
 	sim.lost.connect(_on_lost)
+	sim.links_changed.connect(_check_guide)
 	director = DamageDirector.new(sim, curve, RandomNumberGenerator.new())
 	director.event_fired.connect(func(l: String) -> void: event_fired.emit(l))
-	StarterLayout.build(sim, RandomNumberGenerator.new())
+	# The shell goes into the sim now but is drawn by the reveal, so connect
+	# organelle_added only afterwards.
+	StarterLayout.build_shell(sim, RandomNumberGenerator.new())
+	sim.organelle_added.connect(_on_added)
+	guide = SetupGuide.new(sim)
+	guide.begin()
+	intro_playing = true
+	_reveal = IntroReveal.new(StarterLayout.shell_tiles(cell_type), _reveal_tile)
+	_reveal.finished.connect(_on_intro_finished)
 	tool = ""
 	paused = false
 	speed = GameSpeed.NORMAL
 	_apply_speed()
 	speed_changed.emit(speed)
 	running = true
-	_timer.start()
 	run_started.emit()
+
+
+## Finishes the intro at once. Tests and tools only; the player cannot skip it.
+func skip_intro() -> void:
+	if _reveal != null:
+		_reveal.skip()
+
+
+func _reveal_tile(id: String, cell: Vector2i) -> void:
+	if not _layers.has(id):
+		return
+	(_layers[id] as TileBase).show_tile(cell)
+	_spawn_pop(cell)
+
+
+## A short white flash over a tile as it appears. Visual only.
+func _spawn_pop(cell: Vector2i) -> void:
+	var half := Vector2(_grid.tile_set.tile_size) / 2.0
+	var pop := Polygon2D.new()
+	pop.polygon = PackedVector2Array([-half, Vector2(half.x, -half.y), half, Vector2(-half.x, half.y)])
+	pop.color = Color(1, 1, 1, 0.8)
+	pop.position = _grid.map_to_local(cell)
+	pop.scale = Vector2.ONE * 1.8
+	_grid.add_child(pop)
+	var tween := pop.create_tween().set_parallel(true)
+	tween.tween_property(pop, "scale", Vector2.ONE, POP_SECONDS)
+	tween.tween_property(pop, "color:a", 0.0, POP_SECONDS)
+	tween.chain().tween_callback(pop.queue_free)
+
+
+func _on_intro_finished() -> void:
+	intro_playing = false
+	intro_finished.emit()
+	guide_changed.emit()
+
+
+## Re-checks the checklist after any build or link change. The first time every
+## step is done the clock starts.
+func _check_guide() -> void:
+	if guide == null:
+		return
+	guide_changed.emit()
+	if guide.refresh():
+		_timer.start()
+		setup_done.emit()
 
 
 func set_paused(p: bool) -> void:
@@ -117,11 +186,13 @@ func _on_added(uid: int) -> void:
 	var o: PlacedOrganelle = sim.organelles[uid]
 	if _layers.has(o.def.id):
 		(_layers[o.def.id] as TileBase).show_tile(o.cell)
+	_check_guide()
 
 
 func _on_removed(_uid: int, cell: Vector2i, def_id: String) -> void:
 	if _layers.has(def_id):
 		(_layers[def_id] as TileBase).hide_tile(cell)
+	_check_guide()
 
 
 # ----- queries -----
@@ -169,6 +240,8 @@ func describe(uid: int) -> String:
 
 ## Returns "" on success, otherwise the refusal reason.
 func try_place(def_id: String, cell: Vector2i) -> String:
+	if intro_playing:
+		return "intro"
 	if sim == null or not StarterLayout.in_bounds(cell, sim.cell_type):
 		return "outside_cell"
 	var reason := sim.can_place(def_id, cell)
@@ -178,6 +251,8 @@ func try_place(def_id: String, cell: Vector2i) -> String:
 
 
 func try_erase(cell: Vector2i) -> void:
+	if intro_playing:
+		return
 	var uid := uid_at(cell)
 	if uid == -1:
 		return

@@ -61,6 +61,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("open_buildings"):
 		_panels_shown = not _panels_shown
 		_update_panels()
+		_game.panels_toggled.emit(_panels_shown)
 		get_viewport().set_input_as_handled()
 
 

@@ -34,9 +34,17 @@ func _run_cell(game, animal: bool) -> void:
 	game.start_run(animal)
 	await process_frame
 	_check(game.running, tag + ": running after start_run")
+	_check(game.intro_playing, tag + ": the intro is playing")
+	_check(game._timer.is_stopped(), tag + ": clock stopped during the intro")
+	_check(_tiles(game, "membrane") < 76, tag + ": membrane is still popping in, got %d" % _tiles(game, "membrane"))
+	_check(game.try_place("nucleus", Vector2i(0, 0)) == "intro", tag + ": building is blocked during the intro")
+	game.skip_intro()
+	_check(not game.intro_playing, tag + ": intro over after skip")
 	_check(_tiles(game, "membrane") == 76, tag + ": membrane tiles mirrored, got %d" % _tiles(game, "membrane"))
-	_check(_tiles(game, "nucleus") == 1, tag + ": nucleus tile")
 	_check(_tiles(game, "cell wall") == (84 if not animal else 0), tag + ": cell wall tiles, got %d" % _tiles(game, "cell wall"))
+	_check(_tiles(game, "nucleus") == 0, tag + ": the core is not pre-placed")
+	_setup_core(game, animal, tag)
+	_check(_tiles(game, "nucleus") == 1, tag + ": nucleus tile")
 	for i in 5:
 		game._on_tick()
 	_check(not game.sim.is_lost, tag + ": alive after 5 ticks")
@@ -244,6 +252,43 @@ func _run_cell(game, animal: bool) -> void:
 	for i in 4:
 		game._on_tick()
 	_check(game.sim.is_lost and not game.running, tag + ": lost after nucleus removal")
+
+
+func _find(game, global_name: StringName):
+	for c in game.get_children():
+		if c.get_script() != null and c.get_script().get_global_name() == global_name:
+			return c
+	return null
+
+
+## Starts from the revealed shell and sets the core up by hand, like the guide teaches.
+func _setup_core(game, animal: bool, tag: String) -> void:
+	var energy_before: float = game.sim.meters["energy"]
+	var done_count := [0]
+	game.setup_done.connect(func() -> void: done_count[0] += 1)
+	_check(game.guide != null and not game.guide.core_done, tag + ": a fresh guide at the start of every run")
+	_check(game.try_place("nucleus", Vector2i(0, 0)) == "", tag + ": nucleus placed")
+	_check(game.try_place("chromosomes", Vector2i(1, 0)) == "", tag + ": chromosomes placed")
+	_check(game.try_place("mitochondria", Vector2i(-3, 0)) == "", tag + ": mitochondria placed")
+	var nucleus: int = game.uid_at(Vector2i(0, 0))
+	var chromosomes: int = game.uid_at(Vector2i(1, 0))
+	var mito: int = game.uid_at(Vector2i(-3, 0))
+	var anchor: int = game.uid_at(Vector2i(0, -7))
+	_check(game.guide.current_step()["id"] == "power", tag + ": guide moves on to the power step")
+	_check(game._timer.is_stopped(), tag + ": clock still stopped mid-guide")
+	game.sim.add_link(mito, anchor)
+	game.sim.add_link(nucleus, mito)
+	game.sim.add_link(nucleus, anchor)
+	game.sim.add_link(chromosomes, anchor)
+	if not animal:
+		_check(game._timer.is_stopped(), tag + ": a plant also needs its chloroplast before the clock starts")
+		_check(game.try_place("chloroplast", Vector2i(3, 0)) == "", tag + ": chloroplast placed")
+		var chloroplast: int = game.uid_at(Vector2i(3, 0))
+		game.sim.add_link(chloroplast, mito)
+		game.sim.add_link(chloroplast, anchor)
+	_check(done_count[0] == 1, tag + ": setup_done fired once, got %d" % done_count[0])
+	_check(not game._timer.is_stopped(), tag + ": the clock starts once the core is set up")
+	_check(game.sim.meters["energy"] == energy_before, tag + ": setting up the core cost no energy")
 
 
 func _button(pressed: bool) -> InputEventMouseButton:
