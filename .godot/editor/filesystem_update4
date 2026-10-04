@@ -6,3 +6,26 @@ res://scripts/sim/starter_layout.gd
 res://scripts/ui/hud.gd
 res://scripts/sim/setup_guide.gd
 res://tests/test_setup_guide.gd
+res://scripts/TileBase.gd
+res://scripts/game/game_speed.gd
+res://scripts/game/intro_reveal.gd
+res://scripts/game/link_layer.gd
+res://scripts/game/vesicle_fleet.gd
+res://scripts/sim/organelle_def.gd
+res://scripts/sim/placed_organelle.gd
+res://scripts/sim/shipment.gd
+res://scripts/sim/sim_link.gd
+res://scripts/sim/vesicle_path.gd
+res://scripts/ui/build_menu.gd
+res://scripts/ui/encyclopedia.gd
+res://scripts/ui/game_over.gd
+res://scripts/ui/guide_hud.gd
+res://scripts/ui/info_card.gd
+res://scripts/ui/organelle_tip.gd
+res://scripts/ui/speed_controls.gd
+res://scripts/ui/start_screen.gd
+res://scripts/ui/ui_root.gd
+res://scripts/ui/ui_scale.gd
+res://tests/test_intro_reveal.gd
+res://scene/cell Node2D.tscn
+res://assets/themes/custom/custom metal plate theme.tres

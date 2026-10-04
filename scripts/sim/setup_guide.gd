@@ -34,15 +34,15 @@ func begin() -> void:
 func steps() -> Array[Dictionary]:
 	var out: Array[Dictionary] = [
 		{"id": STEP_NUCLEUS, "label": "Place a nucleus with chromosomes touching it",
-			"hint": "Pick Nucleus in the palette and place it, then place Chromosomes right beside it."},
+			"hint": "HINT: Pick Nucleus in the palette and place it, then place Chromosomes right beside it."},
 		{"id": STEP_POWER, "label": "Place mitochondria and link it to the membrane",
-			"hint": "Place Mitochondria. Pick Link, then drag from the mitochondria to a membrane tile for water."},
+			"hint": "HINT: Place Mitochondria. Pick Link, then drag from the mitochondria to a membrane tile for water."},
 		{"id": STEP_WIRE, "label": "Wire the nucleus and chromosomes",
-			"hint": "With Link, drag from the nucleus to the mitochondria (energy) and to a membrane tile (water). Drag from the chromosomes to a membrane tile too."},
+			"hint": "HINT: With Link, drag from the nucleus to the mitochondria (energy) and to a membrane tile (water). Drag from the chromosomes to a membrane tile too."},
 	]
 	if _sim.cell_type == OrganelleDef.CellType.PLANT:
 		out.append({"id": STEP_CHLOROPLAST, "label": "Place a chloroplast and link it",
-			"hint": "Place a Chloroplast, then link it to the mitochondria (energy) and to a membrane or cell wall tile (water)."})
+			"hint": "HINT: Place a Chloroplast, then link it to the mitochondria (energy) and to a membrane or cell wall tile (water)."})
 	return out
 
 
