@@ -152,7 +152,7 @@ func _run_cell(game, animal: bool) -> void:
 		if c.get_script() != null and c.get_script().get_global_name() == &"Hud":
 			hud = c
 	var palette = game.get_node("organell buttons and stuff")
-	var stats = hud.get_child(0)
+	var stats = hud.get_child(0).get_child(0)  # CanvasLayer > UiRoot > stats panel
 	_check(palette.visible and stats.visible, tag + ": panels visible at start")
 	hud._input(_action("open_buildings"))
 	_check(not palette.visible and not stats.visible, tag + ": open_buildings hides palette and stats")

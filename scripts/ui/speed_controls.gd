@@ -16,11 +16,12 @@ var _group := ButtonGroup.new()
 func setup(game) -> void:
 	_game = game
 	layer = 6
+	var root := UiRoot.attach(self)
 	var bar := PanelContainer.new()
 	bar.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP, Control.PRESET_MODE_MINSIZE, 8)
 	bar.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	bar.theme = MetalUi.theme()
-	add_child(bar)
+	root.add_child(bar)
 	var row := HBoxContainer.new()
 	bar.add_child(row)
 	for speed in [GameSpeed.PAUSED, GameSpeed.NORMAL, GameSpeed.DOUBLE]:

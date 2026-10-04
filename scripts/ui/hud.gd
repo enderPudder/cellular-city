@@ -11,6 +11,7 @@ var _bars: Dictionary = {}
 var _time := Label.new()
 var _alerts := Label.new()
 var _tip := Label.new()
+var _root: UiRoot
 var _palette: Control
 var _stats: PanelContainer
 var _panels_shown := true  # toggled by open_buildings; an attack overrides it for the stats tab
@@ -18,11 +19,12 @@ var _panels_shown := true  # toggled by open_buildings; an attack overrides it f
 
 func setup(game) -> void:
 	_game = game
+	_root = UiRoot.attach(self)
 	var panel := PanelContainer.new()
 	panel.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT, Control.PRESET_MODE_MINSIZE, 8)
 	panel.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	panel.theme = MetalUi.theme()
-	add_child(panel)
+	_root.add_child(panel)
 	_stats = panel
 	_palette = game.get_node_or_null("organell buttons and stuff") as Control
 	var box := VBoxContainer.new()
@@ -32,9 +34,9 @@ func setup(game) -> void:
 		var row := HBoxContainer.new()
 		var name_label := Label.new()
 		name_label.text = m.capitalize()
-		name_label.custom_minimum_size.x = 60
+		name_label.custom_minimum_size.x = 56
 		var bar := ProgressBar.new()
-		bar.custom_minimum_size = Vector2(160, 16)
+		bar.custom_minimum_size = Vector2(110, 12)
 		bar.show_percentage = false
 		bar.modulate = METER_COLORS[m]
 		row.add_child(name_label)
@@ -50,7 +52,7 @@ func setup(game) -> void:
 	_tip.add_theme_color_override("font_color", Color.WHITE)
 	_tip.add_theme_color_override("font_outline_color", Color.BLACK)
 	_tip.add_theme_constant_override("outline_size", 4)
-	add_child(_tip)
+	_root.add_child(_tip)
 	game.ticked.connect(_refresh)
 	game.run_started.connect(_refresh)
 
@@ -93,4 +95,4 @@ func _process(_delta: float) -> void:
 		return
 	var uid: int = _game.uid_at(_game.cell_at_mouse())
 	_tip.text = _game.describe(uid) if uid != -1 else ""
-	_tip.position = get_viewport().get_mouse_position() + Vector2(14, 14)
+	_tip.position = get_viewport().get_mouse_position() / _root.scale.x + Vector2(14, 14)

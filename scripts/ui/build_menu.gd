@@ -31,6 +31,8 @@ var _group := ButtonGroup.new()
 var _buttons: Dictionary = {}  # tool id -> Button
 var _base_text: Dictionary = {}  # tool id -> original button text
 var _base_font_size: Dictionary = {}  # tool id -> the button's own font size
+var _root: UiRoot
+var _palette: Control
 var _tip_panel := PanelContainer.new()
 var _tip_label := RichTextLabel.new()
 
@@ -38,8 +40,13 @@ var _tip_label := RichTextLabel.new()
 func setup(game) -> void:
 	_game = game
 	_group.allow_unpress = true
+	_root = UiRoot.attach(self)
 	_setup_tip_panel()
 	var palette: Node = game.get_node_or_null(PALETTE_PATH)
+	_palette = game.get_node_or_null("organell buttons and stuff") as Control
+	if _palette != null:
+		game.get_viewport().size_changed.connect(_fit_palette)
+		_fit_palette.call_deferred()
 	if palette != null:
 		for node_name in BUTTON_IDS:
 			var b := palette.get_node_or_null(node_name) as Button
@@ -50,13 +57,21 @@ func setup(game) -> void:
 	bar.grow_horizontal = Control.GROW_DIRECTION_BOTH
 	bar.grow_vertical = Control.GROW_DIRECTION_BEGIN
 	bar.theme = MetalUi.theme()
-	add_child(bar)
+	_root.add_child(bar)
 	var row := HBoxContainer.new()
 	bar.add_child(row)
 	_add_tool(row, "link", "Link")
 	_add_tool(row, "repair", "Repair")
 	game.run_started.connect(_on_run_started)
 	game.ticked.connect(_refresh)
+
+
+## The palette lives in the world canvas, so scale it with the UI and pin it to the
+## top-left of the screen (the camera's view changes with the window size).
+func _fit_palette() -> void:
+	var top_left: Vector2 = _game.get_canvas_transform().affine_inverse() * Vector2.ZERO
+	_palette.scale = Vector2.ONE * UiScale.factor(_game.get_viewport())
+	_palette.position = top_left
 
 
 func _setup_tip_panel() -> void:
@@ -72,7 +87,7 @@ func _setup_tip_panel() -> void:
 	_tip_label.add_theme_font_size_override("normal_font_size", TIP_FONT_SIZE)
 	_tip_label.add_theme_font_size_override("bold_font_size", TIP_FONT_SIZE)
 	_tip_panel.add_child(_tip_label)
-	add_child(_tip_panel)
+	_root.add_child(_tip_panel)
 
 
 func _bind(id: String, b: Button) -> void:
@@ -114,8 +129,10 @@ func show_tip_for(id: String, anchor: Control) -> void:
 		return
 	_tip_panel.reset_size()
 	_tip_panel.visible = true
-	var rect := anchor.get_global_transform_with_canvas() * Rect2(Vector2.ZERO, anchor.size)
-	var view := anchor.get_viewport().get_visible_rect().size
+	var f := _root.scale.x
+	var screen_rect := anchor.get_global_transform_with_canvas() * Rect2(Vector2.ZERO, anchor.size)
+	var rect := Rect2(screen_rect.position / f, screen_rect.size / f)  # in UiRoot units
+	var view := anchor.get_viewport().get_visible_rect().size / f
 	var size := _tip_panel.get_combined_minimum_size()
 	var x := rect.end.x + 8.0
 	if x + size.x > view.x:
